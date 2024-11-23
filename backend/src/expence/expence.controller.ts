@@ -1,11 +1,13 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
   Param,
   Post,
+  Put,
   UseGuards,
 } from "@nestjs/common";
 import { ExpenceService } from "./expence.service";
@@ -37,10 +39,24 @@ export class ExpenceController {
   @Get("/get-by-id/:expenceId")
   @HttpCode(HttpStatus.OK)
   @UseGuards(AtGuard)
-  async getById(
-    @GetCurrentUserId() userId: string,
+  async getById(@Param("expenceId") expenceId: string) {
+    return this.expenceService.getById(expenceId);
+  }
+
+  @Put("/update/:expenceId")
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(AtGuard)
+  async update(
     @Param("expenceId") expenceId: string,
+    @Body() dto: CreateExpenceDto,
   ) {
-    return this.expenceService.getById(userId, expenceId);
+    return this.expenceService.update(expenceId, dto);
+  }
+
+  @Delete("/delete/:expenceId")
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(AtGuard)
+  async delete(@Param("expenceId") expenceId: string) {
+    return this.expenceService.delete(expenceId);
   }
 }

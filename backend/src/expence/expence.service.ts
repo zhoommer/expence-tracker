@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
 import { CreateExpenceDto } from "./dto/createExpence.dto";
 import { CustomException } from "src/common/exceptions/custom-exception";
-import { CreateExpenceResponse } from "./types/createExpenceResponse.type";
+import { ExpenceResponse } from "./types/expenceResponse.type";
 import { ListAllResponse } from "./types/listAllExpenceResponse.type";
 
 @Injectable()
@@ -12,7 +12,7 @@ export class ExpenceService {
   async create(
     createExpenceDto: CreateExpenceDto,
     userId: string,
-  ): Promise<CreateExpenceResponse> {
+  ): Promise<ExpenceResponse> {
     const { name, categoryId, amount, price } = createExpenceDto;
     const category = await this.prisma.expenceCategories.findUnique({
       where: { id: categoryId },
@@ -63,15 +63,11 @@ export class ExpenceService {
     }
   }
 
-  async getById(
-    userId: string,
-    expenceId: string,
-  ): Promise<CreateExpenceResponse> {
+  async getById(expenceId: string): Promise<ExpenceResponse> {
     try {
       const expence = await this.prisma.expence.findUnique({
         where: {
           id: Number(expenceId),
-          userId,
         },
       });
       return {
@@ -84,6 +80,47 @@ export class ExpenceService {
         404,
         error,
       );
+    }
+  }
+
+  async update(
+    expenceId: string,
+    dto: CreateExpenceDto,
+  ): Promise<ExpenceResponse> {
+    try {
+      const updatedExpence = await this.prisma.expence.update({
+        where: {
+          id: Number(expenceId),
+        },
+        data: {
+          name: dto.name,
+          categoryId: dto.categoryId,
+          amount: dto.amount,
+          price: dto.price,
+        },
+      });
+      return {
+        message: "Expence updated successfully",
+        data: updatedExpence,
+      };
+    } catch (error) {
+      throw new CustomException("Expence not updated", 404, error);
+    }
+  }
+
+  async delete(expenceId: string): Promise<ExpenceResponse> {
+    try {
+      const response = await this.prisma.expence.delete({
+        where: {
+          id: Number(expenceId),
+        },
+      });
+      return {
+        message: "Expence successfully deleted",
+        data: response,
+      };
+    } catch (error) {
+      throw new CustomException("Expence cannot delete", 400, error);
     }
   }
 }
