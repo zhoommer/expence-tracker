@@ -68,10 +68,7 @@ export class AuthService {
     });
 
     if (!userExists)
-      throw new CustomException(
-        "No user registered to this email address was found.",
-        404,
-      );
+      throw new CustomException("No user found with this email.", 404);
 
     const passwordMatches = await argon.verify(
       userExists.hash,
