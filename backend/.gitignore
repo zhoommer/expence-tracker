@@ -1,0 +1,51 @@
+# Node.js modülleri
+node_modules/
+
+# Derlenmiş dosyalar (TypeScript -> JavaScript)
+dist/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Sisteme özel dosyalar
+.DS_Store
+Thumbs.db
+
+# Environment dosyaları (gizli bilgileri içerir)
+.env
+.env.*.local
+
+# IDE ve editör dosyaları
+.idea/
+.vscode/
+*.swp
+
+# Test coverage raporları
+coverage/
+
+# Build ve cache dosyaları
+*.cache
+*.tmp
+.cache/
+out/
+
+# PM2
+.pids
+*.pid
+*.seed
+
+# Diğer
+*.tgz
+*.gz
+*.zip
+
+# Debugger
+*.log.*
+
+# Nest CLI ve tsconfig
+.nest-cli.json
+tsconfig.build.tsbuildinfo
