@@ -24,8 +24,10 @@ model User {
   hash   String
   hashRt String?
 
-  createdAt DateTime @default(now())
-  Profile   Profile?
+  createdAt         DateTime            @default(now())
+  Profile           Profile?
+  ExpenceCategories ExpenceCategories[]
+  expences          Expence[]
 }
 
 model Profile {
@@ -38,4 +40,28 @@ model Profile {
   birthDate DateTime
   gender    Gender
   image     String?  @db.VarChar(255)
+}
+
+model Expence {
+  id         Int               @id @default(autoincrement())
+  name       String            @db.VarChar(255)
+  categoryId Int
+  category   ExpenceCategories @relation(fields: [categoryId], references: [id])
+  amount     Float?
+  price      Float
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+}
+
+model ExpenceCategories {
+  id            Int       @id @default(autoincrement())
+  name          String    @db.VarChar(100)
+  spendingLimit Float?
+  userId        String?
+  user          User?     @relation(fields: [userId], references: [id])
+  expences      Expence[]
 }
