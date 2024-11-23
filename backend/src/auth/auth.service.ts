@@ -1,11 +1,12 @@
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { JwtService } from '@nestjs/jwt';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { SignupDto } from './dto/signup.dto';
-import { JwtPayload, Tokens } from './types';
-import * as argon from 'argon2';
-import { CustomException } from 'src/common/exceptions/custom-exception';
+import { Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { JwtService } from "@nestjs/jwt";
+import { PrismaService } from "src/prisma/prisma.service";
+import { SignupDto } from "./dto/signup.dto";
+import { JwtPayload, Tokens } from "./types";
+import * as argon from "argon2";
+import { CustomException } from "src/common/exceptions/custom-exception";
+import { SigninDto } from "./dto/signin.dto";
 
 @Injectable()
 export class AuthService {
@@ -15,20 +16,20 @@ export class AuthService {
     private readonly config: ConfigService,
   ) {}
 
-  async signup(dto: SignupDto): Promise<Tokens> {
-    const hash = await argon.hash(dto.password);
+  async signup(signupDto: SignupDto): Promise<Tokens> {
+    const hash = await argon.hash(signupDto.password);
     const is_user = await this.prisma.user.findUnique({
       where: {
-        email: dto.email,
+        email: signupDto.email,
       },
     });
 
-    if (is_user) throw new CustomException('User already exists', 409);
+    if (is_user) throw new CustomException("User already exists", 409);
 
     return this.prisma.$transaction(async (tx) => {
       const user = await tx.user.create({
         data: {
-          email: dto.email,
+          email: signupDto.email,
           hash,
         },
       });
@@ -36,11 +37,11 @@ export class AuthService {
       const profile = await tx.profile.create({
         data: {
           userId: user.id,
-          firstname: dto.firstname,
-          lastname: dto.lastname,
-          phone: dto.phone,
-          birthDate: dto.birthDate,
-          gender: dto.gender,
+          firstname: signupDto.firstname,
+          lastname: signupDto.lastname,
+          phone: signupDto.phone,
+          birthDate: signupDto.birthDate,
+          gender: signupDto.gender,
         },
       });
 
@@ -61,6 +62,38 @@ export class AuthService {
     });
   }
 
+  async signin(signinDto: SigninDto): Promise<Tokens> {
+    const userExists = await this.prisma.user.findUnique({
+      where: { email: signinDto.email },
+    });
+
+    if (!userExists)
+      throw new CustomException(
+        "No user registered to this email address was found.",
+        404,
+      );
+
+    const passwordMatches = await argon.verify(
+      userExists.hash,
+      signinDto.password,
+    );
+    if (!passwordMatches) throw new CustomException("Password is wrong", 400);
+
+    const userProfile = await this.prisma.profile.findUnique({
+      where: { userId: userExists.id },
+    });
+
+    const tokens = await this.getTokens(
+      userExists.id,
+      userExists.email,
+      userProfile.firstname,
+      userProfile.lastname,
+      userProfile.phone,
+    );
+    await this.updateRtHash(userExists.id, tokens.refresh_token);
+    return tokens;
+  }
+
   async getTokens(
     userId: string,
     email: string,
@@ -78,12 +111,12 @@ export class AuthService {
 
     const [at, rt] = await Promise.all([
       this.jwtService.signAsync(jwtPayload, {
-        secret: this.config.get<string>('AT_SECRET'),
-        expiresIn: '1h',
+        secret: this.config.get<string>("AT_SECRET"),
+        expiresIn: "1h",
       }),
       this.jwtService.signAsync(jwtPayload, {
-        secret: this.config.get<string>('RT_SECRET'),
-        expiresIn: '7d',
+        secret: this.config.get<string>("RT_SECRET"),
+        expiresIn: "7d",
       }),
     ]);
 
@@ -96,7 +129,7 @@ export class AuthService {
   async updateRtHash(userId: string, rt: string): Promise<void> {
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
     if (!user) {
-      throw new Error('User not found');
+      throw new Error("User not found");
     }
 
     const hash = await argon.hash(rt);
