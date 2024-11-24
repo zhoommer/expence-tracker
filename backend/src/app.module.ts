@@ -9,6 +9,7 @@ import { AuthService } from "./auth/auth.service";
 import { JwtModule } from "@nestjs/jwt";
 import { AppService } from "./app.service";
 import { ExpenceModule } from "./expence/expence.module";
+import { ProfileModule } from './profile/profile.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { ExpenceModule } from "./expence/expence.module";
     PrismaModule,
     JwtModule,
     ExpenceModule,
+    ProfileModule,
   ],
   controllers: [AppController],
   providers: [
