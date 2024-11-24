@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Roboto, Open_Sans, Lato } from "next/font/google";
 import "./globals.css";
+import MiniDrawer from "@/components/layout";
 
 const roboto = Roboto({ subsets: ["latin"], weight: ["400", "700"] });
 const openSans = Open_Sans({ subsets: ["latin"], weight: ["400", "600"] });
@@ -21,7 +22,7 @@ export default function RootLayout({
       <body
         className={`${roboto.className} ${openSans.className} ${lato.className} antialiased`}
       >
-        {children}
+        <MiniDrawer>{children}</MiniDrawer>
       </body>
     </html>
   );
