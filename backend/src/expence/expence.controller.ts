@@ -59,4 +59,11 @@ export class ExpenceController {
   async delete(@Param("expenceId") expenceId: string) {
     return this.expenceService.delete(expenceId);
   }
+
+  @Get("/get-total-by-category")
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(AtGuard)
+  async getTotalByCategory(@GetCurrentUserId() userId: string) {
+    return this.expenceService.getTotalByCategory(userId);
+  }
 }

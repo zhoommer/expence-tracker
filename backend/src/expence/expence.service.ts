@@ -4,6 +4,8 @@ import { CreateExpenceDto } from "./dto/createExpence.dto";
 import { CustomException } from "src/common/exceptions/custom-exception";
 import { ExpenceResponse } from "./types/expenceResponse.type";
 import { ListAllResponse } from "./types/listAllExpenceResponse.type";
+import { Response } from "./types/getTotalByCategoryResponse.type";
+import { Categories } from "./types/categories.type";
 
 @Injectable()
 export class ExpenceService {
@@ -121,6 +123,70 @@ export class ExpenceService {
       };
     } catch (error) {
       throw new CustomException("Expence cannot delete", 400, error);
+    }
+  }
+
+  async getTotalByCategory(userId: string): Promise<{
+    message: string;
+    data: Response[];
+  }> {
+    try {
+      const totals = await this.prisma.expence.groupBy({
+        by: ["categoryId"],
+        _sum: { price: true },
+        where: { userId },
+      });
+
+      const categories = await this.prisma.expenceCategories.findMany({
+        where: {
+          id: { in: totals.map((item) => item.categoryId) },
+        },
+        select: {
+          id: true,
+          name: true,
+          spendingLimit: true,
+        },
+      });
+
+      const result = totals.map((expense) => {
+        const category = categories.find(
+          (cat) => cat.id === expense.categoryId,
+        );
+
+        if (!category) {
+          return {
+            categoryId: expense.categoryId,
+            categoryName: "Unknown",
+            totalAmount: expense._sum.price,
+            spendingLimit: null,
+            exeedsLimit: null,
+          };
+        }
+
+        const exeedsLimit =
+          category.spendingLimit !== null
+            ? expense._sum.price > category.spendingLimit
+            : false;
+
+        return {
+          categoryId: category.id,
+          categoryName: category.name,
+          totalAmount: expense._sum.price,
+          spendingLimit: category.spendingLimit,
+          exeedsLimit,
+        };
+      });
+
+      return {
+        message: "Expenses calculating successfully",
+        data: result,
+      };
+    } catch (error) {
+      throw new CustomException(
+        "An error occurred while calculating expenses",
+        404,
+        error,
+      );
     }
   }
 }
