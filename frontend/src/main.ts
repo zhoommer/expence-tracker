@@ -1,4 +1,5 @@
 import "./assets/main.css";
+import { theme } from "./assets/theme";
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
@@ -16,6 +17,7 @@ import * as directives from "vuetify/directives";
 const app = createApp(App);
 
 const vuetify = createVuetify({
+  theme,
   icons: {
     defaultSet: "mdi",
   },
