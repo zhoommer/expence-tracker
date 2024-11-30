@@ -1,10 +1,18 @@
 <script setup lang="ts">
+import Alert from "./alerts/Alert.vue";
 import Appbar from "./appbar/Appbar.vue";
 import Drawer from "./drawer/Drawer.vue";
 import { useThemeStore } from "@/stores/theme/useThemeStore";
-import { ref } from "vue";
+import { useAlertStore } from "@/stores/alert/useAlertStore";
+import { ref, defineProps } from "vue";
+
+interface Props {
+  isAuth: boolean;
+}
 
 const themeStore = useThemeStore();
+const alertStore = useAlertStore();
+const props = defineProps<Props>();
 
 const show = ref(false);
 </script>
@@ -14,11 +22,12 @@ const show = ref(false);
     <v-app>
       <Appbar />
 
-      <Drawer />
+      <Drawer v-if="props.isAuth" />
       <v-main>
         <v-container fluid class="border rounded-lg" height="100%">
+          <Alert v-if="alertStore.show" />
           <RouterView />
-          <v-tooltip v-model="show" location="top">
+          <v-tooltip v-model="show" location="top" v-if="props.isAuth">
             <template v-slot:activator="{ props }">
               <v-btn
                 v-bind="props"

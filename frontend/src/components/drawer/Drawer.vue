@@ -32,7 +32,7 @@
       <v-list density="compact" nav>
         <v-list-item
           prepend-icon="mdi-logout"
-          title="Cikis Yap"
+          title="Log out"
           value="logout"
         ></v-list-item>
       </v-list>
