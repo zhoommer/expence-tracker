@@ -14,33 +14,41 @@ export const useAlertStore = defineStore("alert", {
     text: "" as string | undefined,
   }),
   actions: {
-    success(props: Props) {
+    async success(props: Props) {
       this.show = true;
       this.color = "success";
       this.icon = "$success";
       this.title = props.title;
       this.text = props.text;
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+      this.show = false;
     },
-    info(props: Props) {
+    async info(props: Props) {
       this.show = true;
       this.color = "info";
       this.icon = "$info";
       this.title = props.title;
       this.text = props.text;
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+      this.show = false;
     },
-    warning(props: Props) {
+    async warning(props: Props) {
       this.show = true;
       this.color = "warning";
       this.icon = "$warning";
       this.title = props.title;
       this.text = props.text;
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+      this.show = false;
     },
-    error(props: Props) {
+    async error(props: Props) {
       this.show = true;
       this.color = "error";
       this.icon = "$error";
       this.title = props.title;
       this.text = props.text;
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+      this.show = false;
     },
     hideAlert() {
       this.show = false;
