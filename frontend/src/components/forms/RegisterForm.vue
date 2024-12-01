@@ -3,6 +3,28 @@
     <v-row>
       <v-col cols="12">
         <v-text-field
+          v-model="formData.firstname"
+          type="text"
+          label="Name"
+          placeholder="Enter your name"
+          variant="underlined"
+          prepend-inner-icon="mdi-account"
+          :color="themeStore.color"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="12">
+        <v-text-field
+          v-model="formData.lastname"
+          type="text"
+          label="Surname"
+          placeholder="Enter your surname"
+          variant="underlined"
+          prepend-inner-icon="mdi-account"
+          :color="themeStore.color"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="12">
+        <v-text-field
           v-model="formData.email"
           type="email"
           label="Email"
@@ -28,9 +50,6 @@
       </v-col>
 
       <v-col cols="12" class="mt-5">
-        <div class="d-flex justify-end">
-          <RouterLink to="/forgot-password">Forgot password</RouterLink>
-        </div>
         <div class="d-flex justify-center mt-5">
           <v-btn
             type="submit"
@@ -38,8 +57,8 @@
             size="large"
             width="300"
             :loading="loading"
-            append-icon="mdi-login"
-            >Log in</v-btn
+            append-icon="mdi-account-plus"
+            >Register</v-btn
           >
         </div>
       </v-col>
@@ -60,9 +79,22 @@ const userStore = useUserStore();
 const show = ref(false);
 const loading = userStore.loading;
 
-const formData: { email: string; password: string } = reactive({
+const formData: {
+  email: string;
+  password: string;
+  firstname: string;
+  lastname: string;
+  birthDate: string;
+  phone: string;
+  gender: "MALE" | "FEMALE";
+} = reactive({
   email: "",
   password: "",
+  firstname: "",
+  lastname: "",
+  birthDate: "",
+  phone: "",
+  gender: "MALE",
 });
 
 const handleSubmit = async () => {

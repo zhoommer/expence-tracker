@@ -34,6 +34,7 @@
           prepend-icon="mdi-logout"
           title="Log out"
           value="logout"
+          @click="logout"
         ></v-list-item>
       </v-list>
     </template>
@@ -43,8 +44,17 @@
 <script setup lang="ts">
 import { useDrawerStore } from "@/stores/drawer/useDrawerStore";
 import { useThemeStore } from "@/stores/theme/useThemeStore";
+import { useUserStore } from "@/stores/user/useUserStore";
 import { menu } from "./Menu";
+import { useRouter } from "vue-router";
 
 const drawerStore = useDrawerStore();
 const themeStore = useThemeStore();
+const userStore = useUserStore();
+const router = useRouter();
+
+const logout = async () => {
+  await userStore.logout();
+  router.push("/login");
+};
 </script>

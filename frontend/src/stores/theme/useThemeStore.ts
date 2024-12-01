@@ -13,5 +13,8 @@ export const useThemeStore = defineStore("theme", {
     color: (state) => {
       return state.mode === "light" ? "primary" : "warning";
     },
+    variant: (state) => {
+      return state.mode === "light" ? "flat" : "tonal";
+    },
   },
 });

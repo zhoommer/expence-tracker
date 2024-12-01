@@ -42,7 +42,7 @@ axiosClient.interceptors.response.use(
   (error) => {
     if (error.response && error.response.status === 401) {
       localStorage.removeItem("token"); // Çıkış işlemi
-      router.push({ path: "/login" });
+      router.push({ path: "/auth" });
     } else if (error.response && error.response.status === 500) {
       console.log(error.response);
     }

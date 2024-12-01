@@ -3,9 +3,9 @@ import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
   {
-    path: "/login",
-    name: "Login",
-    component: import("@/views/auth/Login.vue"),
+    path: "/auth",
+    name: "Auth",
+    component: import("@/views/auth/AuthLayout.vue"),
   },
   {
     path: "/",
@@ -33,7 +33,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore();
   if (to.meta.requiresAuth && !userStore.token) {
-    next("/login");
+    next("/auth");
   } else {
     next();
   }
