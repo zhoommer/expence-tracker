@@ -5,6 +5,6 @@ interface Menu {
 }
 
 export const menu: Menu[] = [
-  { icon: "mdi-view-dashboard", title: "Dashboard", to: "/" },
-  { icon: "mdi-cash-multiple", title: "Expenses", to: "/expenses" },
+  { icon: "mdi-view-dashboard", title: "dashboard", to: "/" },
+  { icon: "mdi-cash-multiple", title: "expenses", to: "/expenses" },
 ];

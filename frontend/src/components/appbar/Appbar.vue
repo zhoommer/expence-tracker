@@ -1,5 +1,9 @@
 <template>
-  <v-app-bar title="EXPENCE TRACKER" :elevation="5" :color="themeStore.color">
+  <v-app-bar
+    :title="$t('expense tracker')"
+    :elevation="5"
+    :color="themeStore.color"
+  >
     <template v-slot:prepend>
       <v-app-bar-nav-icon
         v-if="$vuetify.display.mobile"

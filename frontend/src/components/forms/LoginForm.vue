@@ -35,7 +35,6 @@
           <v-btn
             type="submit"
             :color="themeStore.color"
-            size="large"
             width="300"
             :loading="loading"
             append-icon="mdi-login"

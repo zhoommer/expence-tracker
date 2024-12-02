@@ -36,7 +36,7 @@ model Profile {
   user      User     @relation(fields: [userId], references: [id])
   firstname String   @db.VarChar(100)
   lastname  String   @db.VarChar(100)
-  phone     String   @db.VarChar(10)
+  phone     String   @db.VarChar(14)
   birthDate DateTime
   gender    Gender
   image     String?  @db.VarChar(255)

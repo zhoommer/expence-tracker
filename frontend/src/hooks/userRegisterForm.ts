@@ -8,6 +8,7 @@ import type { SignUpCredentials } from "@/definations/signup-credentials.type";
 
 interface InitialState extends SignUpCredentials {
   rePassword: string;
+  countryCode: { country: string; code: string };
 }
 
 export function useRegisterForm() {
@@ -25,6 +26,7 @@ export function useRegisterForm() {
     firstname: "",
     lastname: "",
     birthDate: "",
+    countryCode: { country: "Türkiye", code: "+90" },
     phone: "",
     gender: "MALE",
   });
@@ -48,7 +50,7 @@ export function useRegisterForm() {
       email: initialState.email,
       password: initialState.password,
       birthDate: new Date(initialState.birthDate).toISOString(),
-      phone: initialState.phone,
+      phone: initialState.countryCode.code + initialState.phone,
       gender: initialState.gender,
     };
 
