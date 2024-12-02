@@ -11,6 +11,7 @@ const isAuth = computed(() => userStore.isAuthenticated);
 
 onMounted(() => {
   userStore.checkAuth();
+  userStore.getMe();
 });
 </script>
 

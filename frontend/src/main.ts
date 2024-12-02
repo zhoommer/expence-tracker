@@ -14,12 +14,18 @@ import { createVuetify } from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
 
+// dayjs
+import DayJsADapter from "@date-io/dayjs";
+
 const app = createApp(App);
 
 const vuetify = createVuetify({
   theme,
   icons: {
     defaultSet: "mdi",
+  },
+  date: {
+    adapter: DayJsADapter,
   },
   components,
   directives,
