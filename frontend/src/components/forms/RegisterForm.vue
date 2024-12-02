@@ -83,7 +83,17 @@
         ></v-text-field>
       </v-col>
 
-      <v-col>
+      <v-col class="d-flex">
+        <v-select
+          v-model="initialState.countryCode"
+          :items="countryPhoneCodes"
+          item-title="code"
+          item-value="code"
+          :color="themeStore.color"
+          label="Country"
+          variant="underlined"
+          max-width="70"
+        ></v-select>
         <v-text-field
           v-model="initialState.phone"
           type="phone"
@@ -97,17 +107,18 @@
       </v-col>
 
       <v-col cols="12" class="d-flex justify-end">
-        <v-switch
+        <v-btn-toggle
           v-model="initialState.gender"
-          :label="switchColor.label"
-          :color="switchColor.color"
-          false-icon="mdi-gender-male"
-          true-icon="mdi-gender-female"
-          false-value="MALE"
-          true-value="FEMALE"
-          required
-          :error-messages="v$.gender.$errors.map((e) => e.$message)"
-        ></v-switch>
+          :color="themeStore.color"
+          elevation="10"
+        >
+          <v-btn value="MALE" color="blue">
+            <v-icon>mdi-gender-male</v-icon>
+          </v-btn>
+          <v-btn value="FEMALE" color="pink">
+            <v-icon>mdi-gender-female</v-icon>
+          </v-btn>
+        </v-btn-toggle>
       </v-col>
       <v-col cols="12" class="mt-5">
         <div class="d-flex justify-center mt-5">
@@ -128,6 +139,8 @@
 
 <script setup lang="ts">
 import { useRegisterForm } from "@/hooks/userRegisterForm";
+import { countryPhoneCodes } from "@/utils/countryPhoneCodes";
+import { watch } from "vue";
 
 const {
   themeStore,

@@ -20,7 +20,7 @@
         v-for="(item, index) in menu"
         :key="index"
         :prepend-icon="item.icon"
-        :title="item.title"
+        :title="$t(item.title)"
         :value="item"
         :to="item.to"
         active-color="surface"
@@ -31,7 +31,7 @@
       <v-list density="compact" nav>
         <v-list-item
           prepend-icon="mdi-logout"
-          title="Log out"
+          :title="$t('logout')"
           value="logout"
           @click="logout"
         ></v-list-item>

@@ -2,18 +2,21 @@
   <v-card
     :theme="themeStore.mode"
     height="100%"
-    width="50%"
+    :width="$vuetify.display.mobile ? '100%' : '50%'"
     location="center"
-    class="pa-16"
+    :class="$vuetify.display.mobile ? '' : 'pa-16'"
   >
-    <v-tabs v-model="tab" align-tabs="center" color="deep-purple-accent-4">
+    <v-tabs v-model="tab" align-tabs="center" :color="themeStore.color">
       <v-tab :value="'login'">Login</v-tab>
       <v-tab :value="'register'">Register</v-tab>
     </v-tabs>
 
-    <v-tabs-window v-model="tab">
+    <v-tabs-window
+      v-model="tab"
+      :class="$vuetify.display.mobile ? '' : 'pa-10'"
+    >
       <v-tabs-window-item :value="'login'">
-        <v-container class="d-flex justify-center items-center">
+        <v-container class="d-flex justify-center items-center w-50 mt-16">
           <Login />
         </v-container>
       </v-tabs-window-item>

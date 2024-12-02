@@ -72,14 +72,12 @@ export const useUserStore = defineStore("user", {
     },
 
     async logout() {
-      this.loading = true;
       const alertStore = useAlertStore();
       alertStore.info({ title: "", text: "Loging out" });
       await new Promise((resolve) => setTimeout(resolve, 2000));
       localStorage.removeItem("token");
       this.user = null;
       this.token = null;
-      this.loading = false;
     },
 
     async getMe() {

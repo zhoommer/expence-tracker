@@ -17,6 +17,11 @@ import * as directives from "vuetify/directives";
 // dayjs
 import DayJsADapter from "@date-io/dayjs";
 
+// locale
+import { createI18n } from "vue-i18n";
+import en from "./locales/en.json";
+import tr from "./locales/tr.json";
+
 const app = createApp(App);
 
 const vuetify = createVuetify({
@@ -31,8 +36,18 @@ const vuetify = createVuetify({
   directives,
 });
 
+const i18n = createI18n({
+  locale: "en",
+  fallbackLocale: "en",
+  messages: {
+    en,
+    tr,
+  },
+});
+
 app.use(createPinia());
 app.use(router);
 app.use(vuetify);
+app.use(i18n);
 
 app.mount("#app");
