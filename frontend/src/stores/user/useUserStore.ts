@@ -1,17 +1,20 @@
 import { defineStore } from "pinia";
 import { AuthServices } from "@/services/authServices";
 import { useAlertStore } from "../alert/useAlertStore";
+import type { SignUpCredentials } from "@/definations/signup-credentials.type";
+import type { User } from "@/definations/user.type";
 
 const client = new AuthServices();
 export const useUserStore = defineStore("user", {
   state: () => ({
-    user: null,
+    user: null as User | null,
     token: localStorage.getItem("token") as string | null,
     loading: false as boolean,
     error: "" as string | null,
   }),
   getters: {
     isAuthenticated: (state) => !!state.token,
+    fullName: (state) => state.user?.firstname + " " + state.user?.lastname,
   },
 
   actions: {
@@ -26,7 +29,13 @@ export const useUserStore = defineStore("user", {
       this.error = null;
       try {
         const response = await client.signin(credentials);
-        this.token = response.access_token;
+        if (response.access_token) {
+          this.token = response.access_token;
+          const profile = await client.getMe();
+          if (profile.data) {
+            this.user = profile.data;
+          }
+        }
         alertStore.success({
           title: "",
           text: "Login successfull",
@@ -43,6 +52,25 @@ export const useUserStore = defineStore("user", {
       }
     },
 
+    async signup(credentials: SignUpCredentials) {
+      const alertStore = useAlertStore();
+      this.loading = true;
+      this.error = null;
+      try {
+        const response = await client.signup(credentials);
+        alertStore.success({
+          title: "",
+          text: "Registration process successful",
+        });
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        if (response) window.location.reload();
+      } catch (error) {
+        this.error = "Register failed";
+      } finally {
+        this.loading = false;
+      }
+    },
+
     async logout() {
       this.loading = true;
       const alertStore = useAlertStore();
@@ -52,6 +80,20 @@ export const useUserStore = defineStore("user", {
       this.user = null;
       this.token = null;
       this.loading = false;
+    },
+
+    async getMe() {
+      this.loading = true;
+      this.error = null;
+
+      try {
+        const response = await client.getMe();
+        this.user = response.data;
+      } catch (error) {
+        this.error = "Fetch failed";
+      } finally {
+        this.loading = false;
+      }
     },
   },
 });

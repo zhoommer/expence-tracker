@@ -1,5 +1,6 @@
 import type { SignUpCredentials } from "@/definations/signup-credentials.type";
 import axiosClient from "./axiosIntance";
+import type { User } from "@/definations/user.type";
 
 export class AuthServices {
   private client = axiosClient;
@@ -22,6 +23,13 @@ export class AuthServices {
       access_token: string;
       refresh_token: string;
     }>("/auth/signup", credentials);
+    return response.data;
+  }
+
+  async getMe(): Promise<{ message: string; data: User }> {
+    const response = await this.client.get<{ message: string; data: User }>(
+      "/profile/me",
+    );
     return response.data;
   }
 }
