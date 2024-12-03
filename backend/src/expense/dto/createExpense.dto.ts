@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsNumber, IsPositive } from "class-validator";
 
-export class CreateExpenceDto {
+export class CreateExpenseDto {
   @IsNotEmpty({ message: "name cannot be empty" })
   name: string;
 
