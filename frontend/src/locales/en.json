@@ -2,6 +2,21 @@
   "dashboard": "Dashboard",
   "expenses": "Expenses",
   "logout": "Log out",
+  "login": "Log in",
+  "log in": "Log in",
+  "register": "Register",
+  "password": "Password",
+  "enter your email": "Enter your email",
+  "enter your password": "Enter your password",
+  "forgot password": "Forgot password",
+  "name": "Name",
+  "enter your name": "Enter your name",
+  "surname": "Surname",
+  "enter your surname": "Enter your surname",
+  "birth date": "Birth Date",
+  "re-password": "Re-Password",
+  "country": "Country",
+  "phone number": "Phone Number",
 
-  "expense tracker": "EXPENSE TRACKER"
+  "login successful. enjoy your experience!": "Login successful. Enjoy your experience!"
 }

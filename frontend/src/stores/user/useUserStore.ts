@@ -38,7 +38,7 @@ export const useUserStore = defineStore("user", {
         }
         alertStore.success({
           title: "",
-          text: "Login successfull",
+          text: "Login successful. Enjoy your experience!",
         });
         localStorage.setItem("token", response.access_token);
       } catch (error: any) {

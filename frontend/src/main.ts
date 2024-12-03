@@ -21,8 +21,12 @@ import DayJsADapter from "@date-io/dayjs";
 import { createI18n } from "vue-i18n";
 import en from "./locales/en.json";
 import tr from "./locales/tr.json";
+import { useLangStore } from "./stores/lang/useLangStore";
 
 const app = createApp(App);
+const pinia = createPinia();
+const langStore = useLangStore(pinia);
+const locale = langStore.locale;
 
 const vuetify = createVuetify({
   theme,
@@ -37,7 +41,7 @@ const vuetify = createVuetify({
 });
 
 const i18n = createI18n({
-  locale: "en",
+  locale: locale,
   fallbackLocale: "en",
   messages: {
     en,
@@ -45,7 +49,7 @@ const i18n = createI18n({
   },
 });
 
-app.use(createPinia());
+app.use(pinia);
 app.use(router);
 app.use(vuetify);
 app.use(i18n);

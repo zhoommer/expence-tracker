@@ -2,6 +2,21 @@
   "dashboard": "Panel",
   "expenses": "Harcamalar",
   "logout": "Çıkış Yap",
+  "login": "Giriş Yap",
+  "log in": "Giriş Yap",
+  "register": "Kayit Ol",
+  "password": "Parola",
+  "enter your email": "Email adresinizi girin",
+  "enter your password": "Şifrenizi oluşturun",
+  "forgot password": "Şifrenizi mi unuttunuz?",
+  "name": "Ad",
+  "enter your name": "Adınızı yazın",
+  "surname": "Soyad",
+  "enter your surname": "Soyadınızı yazın",
+  "birth date": "Doğum Tarihi",
+  "re-password": "Şifre Tekrarı",
+  "country": "Ülke",
+  "phone number": "Telefon numarası",
 
-  "expense tracker": "GİDER TAKİPCİSİ"
+  "login successful. enjoy your experience!": "Başarıyla giriş yaptınız. Keyifli kullanımlar!"
 }
