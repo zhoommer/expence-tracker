@@ -7,8 +7,8 @@
     :class="$vuetify.display.mobile ? '' : 'pa-16'"
   >
     <v-tabs v-model="tab" align-tabs="center" :color="themeStore.color">
-      <v-tab :value="'login'">Login</v-tab>
-      <v-tab :value="'register'">Register</v-tab>
+      <v-tab :value="'login'">{{ $t("login") }}</v-tab>
+      <v-tab :value="'register'">{{ $t("register") }}</v-tab>
     </v-tabs>
 
     <v-tabs-window

@@ -5,8 +5,8 @@
         <v-text-field
           v-model="initialState.firstname"
           type="text"
-          label="Name"
-          placeholder="Enter your name"
+          :label="$t('name')"
+          :placeholder="$t('enter your name')"
           variant="underlined"
           prepend-inner-icon="mdi-account"
           :color="themeStore.color"
@@ -18,8 +18,8 @@
         <v-text-field
           v-model="initialState.lastname"
           type="text"
-          label="Surname"
-          placeholder="Enter your surname"
+          :label="$t('surname')"
+          :placeholder="$t('enter your surname')"
           variant="underlined"
           prepend-inner-icon="mdi-account"
           :color="themeStore.color"
@@ -32,7 +32,7 @@
           v-model="initialState.email"
           type="email"
           label="Email"
-          placeholder="Enter your email"
+          :placeholder="$t('enter your email')"
           variant="underlined"
           prepend-inner-icon="mdi-email"
           :color="themeStore.color"
@@ -45,8 +45,8 @@
         <v-text-field
           v-model="initialState.password"
           :type="show ? 'text' : 'password'"
-          label="Password"
-          placeholder="Enter your password"
+          :label="$t('password')"
+          :placeholder="$t('enter your password')"
           variant="underlined"
           prepend-inner-icon="mdi-lock"
           :color="themeStore.color"
@@ -60,8 +60,8 @@
         <v-text-field
           v-model="initialState.rePassword"
           :type="show ? 'text' : 'password'"
-          label="Re-Password"
-          placeholder="Enter your password"
+          :label="$t('re-password')"
+          :placeholder="$t('enter your password')"
           variant="underlined"
           prepend-inner-icon="mdi-lock"
           :color="themeStore.color"
@@ -75,7 +75,7 @@
         <v-text-field
           v-model="initialState.birthDate"
           type="date"
-          label="Birth Date"
+          :label="$t('birth date')"
           variant="underlined"
           :color="themeStore.color"
           required
@@ -90,14 +90,14 @@
           item-title="code"
           item-value="code"
           :color="themeStore.color"
-          label="Country"
+          :label="$t('country')"
           variant="underlined"
           max-width="70"
         ></v-select>
         <v-text-field
           v-model="initialState.phone"
           type="phone"
-          label="Phone Number"
+          :label="$t('phone number')"
           variant="underlined"
           :color="themeStore.color"
           required
@@ -129,7 +129,7 @@
             width="300"
             :loading="loading"
             append-icon="mdi-account-plus"
-            >Register</v-btn
+            >{{ $t("register") }}</v-btn
           >
         </div>
       </v-col>

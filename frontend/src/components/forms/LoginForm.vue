@@ -6,7 +6,7 @@
           v-model="formData.email"
           type="email"
           label="Email"
-          placeholder="Enter your email"
+          :placeholder="$t('enter your email')"
           variant="underlined"
           prepend-inner-icon="mdi-email"
           :color="themeStore.color"
@@ -17,8 +17,8 @@
         <v-text-field
           v-model="formData.password"
           :type="show ? 'text' : 'password'"
-          label="Password"
-          placeholder="Enter your password"
+          :label="$t('password')"
+          :placeholder="$t('enter your password')"
           variant="underlined"
           prepend-inner-icon="mdi-lock"
           :color="themeStore.color"
@@ -29,7 +29,9 @@
 
       <v-col cols="12" class="mt-5">
         <div class="d-flex justify-end">
-          <RouterLink to="/forgot-password">Forgot password</RouterLink>
+          <RouterLink to="/forgot-password">{{
+            $t("forgot password")
+          }}</RouterLink>
         </div>
         <div class="d-flex justify-center mt-5">
           <v-btn
@@ -38,7 +40,7 @@
             width="300"
             :loading="loading"
             append-icon="mdi-login"
-            >Log in</v-btn
+            >{{ $t("log in") }}</v-btn
           >
         </div>
       </v-col>
