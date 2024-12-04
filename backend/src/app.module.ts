@@ -8,8 +8,8 @@ import { AtGuard } from "./common/guards";
 import { AuthService } from "./auth/auth.service";
 import { JwtModule } from "@nestjs/jwt";
 import { AppService } from "./app.service";
-import { ExpenceModule } from "./expence/expence.module";
-import { ProfileModule } from './profile/profile.module';
+import { ExpenseModule } from "./expense/expense.module";
+import { ProfileModule } from "./profile/profile.module";
 
 @Module({
   imports: [
@@ -20,7 +20,7 @@ import { ProfileModule } from './profile/profile.module';
     AuthModule,
     PrismaModule,
     JwtModule,
-    ExpenceModule,
+    ExpenseModule,
     ProfileModule,
   ],
   controllers: [AppController],

@@ -1,5 +1,4 @@
 export type Profile = {
-  id: number;
   image?: string;
   phone: string;
   gender: "MALE" | "FEMALE";
@@ -7,4 +6,5 @@ export type Profile = {
   lastname: string;
   birthDate: Date;
   firstname: string;
+  email: string;
 };

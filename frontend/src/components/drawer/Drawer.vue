@@ -10,6 +10,7 @@
       <v-list-item
         prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
         :title="userStore.fullName"
+        :subtitle="userStore.user?.email"
       ></v-list-item>
     </v-list>
 

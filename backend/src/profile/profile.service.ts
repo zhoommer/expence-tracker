@@ -13,11 +13,23 @@ export class ProfileService {
     try {
       const profile = await this.prisma.profile.findUnique({
         where: { userId },
+        include: { user: true },
       });
+
+      const { image, phone, gender, lastname, birthDate, firstname } = profile;
 
       return {
         message: "Profile successfully fetched",
-        data: profile,
+        data: {
+          image,
+          phone,
+          gender,
+          userId: profile.userId,
+          lastname,
+          birthDate,
+          firstname,
+          email: profile.user.email,
+        },
       };
     } catch (error) {
       throw new CustomException(
