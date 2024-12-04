@@ -3,8 +3,10 @@ import { AuthServices } from "@/services/authServices";
 import { useAlertStore } from "../alert/useAlertStore";
 import type { SignUpCredentials } from "@/definations/signup-credentials.type";
 import type { User } from "@/definations/user.type";
+import { AuthAlertMessages } from "@/utils/alertMessages/auth/alertAuthMessages";
 
 const client = new AuthServices();
+const authAlertMessages = new AuthAlertMessages();
 export const useUserStore = defineStore("user", {
   state: () => ({
     user: null as User | null,
@@ -38,7 +40,7 @@ export const useUserStore = defineStore("user", {
         }
         alertStore.success({
           title: "",
-          text: "Login successful. Enjoy your experience!",
+          text: authAlertMessages.successLogin(),
         });
         localStorage.setItem("token", response.access_token);
       } catch (error: any) {
@@ -60,7 +62,7 @@ export const useUserStore = defineStore("user", {
         const response = await client.signup(credentials);
         alertStore.success({
           title: "",
-          text: "Registration process successful",
+          text: authAlertMessages.successSignUp(),
         });
         await new Promise((resolve) => setTimeout(resolve, 2000));
         if (response) window.location.reload();
@@ -73,7 +75,7 @@ export const useUserStore = defineStore("user", {
 
     async logout() {
       const alertStore = useAlertStore();
-      alertStore.info({ title: "", text: "Loging out" });
+      alertStore.info({ title: "", text: authAlertMessages.successLogout() });
       await new Promise((resolve) => setTimeout(resolve, 2000));
       localStorage.removeItem("token");
       this.user = null;

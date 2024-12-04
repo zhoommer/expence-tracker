@@ -17,6 +17,26 @@
   "re-password": "Şifre Tekrarı",
   "country": "Ülke",
   "phone number": "Telefon numarası",
+  "add expense": "Harcama Ekle",
+  "expense": "Harcama",
+  "category": "Kategori",
+  "amount": "Miktar",
+  "price": "Fiyat",
+  "close": "Kapat",
+  "save": "Kaydet",
+  "Food and Beverages": "Gıda ve İçecek",
+  "Transportation": "Ulaşım",
+  "Rent and Utilities": "Kira ve Faturalar",
+  "Education and Development": "Eğitim ve Gelişim",
+  "Health and Care": "Sağlık ve Bakım",
+  "Entertainment and Hobbies": "Eğlence ve Hobiler",
+  "Clothing and Accessories": "Giyim ve Aksesuar",
+  "Home and Furniture": "Ev ve Mobilya",
+  "Travel and Vacation": "Seyahat ve Tatil",
+  "Donation and Charity": "Bağış ve Yardımlar",
+  "Digital Subscriptions": "Dijital Abonelikler",
+  "Child and Pet": "Çocuk ve Evcil Hayvan Masrafları",
+  "Other": "Diğer",
 
-  "login successful. enjoy your experience!": "Başarıyla giriş yaptınız. Keyifli kullanımlar!"
+  "Your expense has been added successfully.": "Harcamanız başarıyla eklendi."
 }
