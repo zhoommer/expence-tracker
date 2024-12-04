@@ -45,7 +45,7 @@ const show = ref(false);
                 @click="expenseStore.showDialog()"
               ></v-btn>
             </template>
-            <span>Add Expense</span>
+            <span>{{ $t("add expense") }}</span>
           </v-tooltip>
         </v-container>
       </v-main>

@@ -10,6 +10,7 @@ import { JwtModule } from "@nestjs/jwt";
 import { AppService } from "./app.service";
 import { ExpenseModule } from "./expense/expense.module";
 import { ProfileModule } from "./profile/profile.module";
+import { CategoriesModule } from "./categories/categories.module";
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { ProfileModule } from "./profile/profile.module";
     JwtModule,
     ExpenseModule,
     ProfileModule,
+    CategoriesModule,
   ],
   controllers: [AppController],
   providers: [

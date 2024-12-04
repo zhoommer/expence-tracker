@@ -17,6 +17,25 @@
   "re-password": "Re-Password",
   "country": "Country",
   "phone number": "Phone Number",
-
-  "login successful. enjoy your experience!": "Login successful. Enjoy your experience!"
+  "add expense": "Add Expense",
+  "expense": "Expense",
+  "category": "Category",
+  "amount": "Amount",
+  "price": "Price",
+  "close": "Close",
+  "save": "Save",
+  "Food and Beverages": "Food and Beverages",
+  "Transportation": "Transportation",
+  "Rent and Utilities": "Rent and Utilities",
+  "Education and Development": "Education and Development",
+  "Health and Care": "Health and Care",
+  "Entertainment and Hobbies": "Entertainment and Hobbies",
+  "Clothing and Accessories": "Clothing and Accessories",
+  "Home and Furniture": "Home and Furniture",
+  "Travel and Vacation": "Travel and Vacation",
+  "Donation and Charity": "Donation and Charity",
+  "Digital Subscriptions": "Digital Subscriptions",
+  "Child and Pet": "Child and Pet",
+  "Other": "Other",
+  "Your expense has been added successfully.": "Your expense has been added successfully."
 }

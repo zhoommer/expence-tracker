@@ -1,41 +1,46 @@
 <template>
   <v-dialog v-model="expenseStore.dialog" max-width="600">
-    <v-card prepend-icon="mdi-cash-multiple" title="Add Expense">
+    <v-card prepend-icon="mdi-cash-multiple" :title="$t('add expense')">
       <v-card-text>
         <v-row dense>
-          <v-col cols="12" md="4" sm="6">
+          <v-col cols="12" lg="6">
             <v-text-field
               v-model="initialState.name"
-              label="Name*"
+              :label="$t('expense') + '*'"
               :color="themeStore.color"
               required
             ></v-text-field>
           </v-col>
 
-          <v-col cols="12" md="4" sm="6">
+          <v-col cols="12" lg="6">
             <v-select
               v-model="initialState.categoryId"
-              label="Category*"
-              :items="categories"
-              item-title="label"
-              item-value="value"
+              :label="$t('category') + '*'"
+              :items="translatedItems()"
+              item-title="title"
+              item-value="id"
               :color="themeStore.color"
             >
             </v-select>
           </v-col>
 
-          <v-col cols="12" md="4" sm="6">
+          <v-col cols="12" lg="6">
             <v-text-field
               type="number"
               v-model="initialState.amount"
-              label="Amount*"
+              :label="$t('amount') + '*'"
               :color="themeStore.color"
               required
             ></v-text-field>
           </v-col>
 
-          <v-col cols="12" md="4" sm="6">
-            <v-text-field type="number" label="Price*" required></v-text-field>
+          <v-col cols="12" lg="6">
+            <v-text-field
+              v-model="initialState.price"
+              type="number"
+              :label="$t('price') + '*'"
+              required
+            ></v-text-field>
           </v-col>
         </v-row>
       </v-card-text>
@@ -46,17 +51,20 @@
         <v-spacer></v-spacer>
 
         <v-btn
-          text="Close"
+          :text="$t('close')"
           :variant="themeStore.variant"
           color="error"
           @click="expenseStore.dialog = false"
         ></v-btn>
 
         <v-btn
-          color="success"
-          text="Save"
+          type="submit"
+          :text="$t('save')"
           :variant="themeStore.variant"
-          @click="expenseStore.dialog = false"
+          color="success"
+          @click.prevent="handleSubmit"
+          :loading="expenseStore.loading"
+          :disabled="expenseStore.loading"
         ></v-btn>
       </v-card-actions>
     </v-card>
@@ -67,13 +75,16 @@
 import { useExpenseStore } from "@/stores/expense/useExpenseStore";
 import { useExpenseForm } from "@/hooks/addExpenseForm";
 import { useThemeStore } from "@/stores/theme/useThemeStore";
+import { useCategoriesStore } from "@/stores/categories/useCategoriesStore";
+import { onMounted } from "vue";
 
 const expenseStore = useExpenseStore();
 const themeStore = useThemeStore();
+const categoriesStore = useCategoriesStore();
 
-const categories = [
-  { label: "Electronic", value: 1 },
-  { label: "Travel", value: 2 },
-];
-const { initialState, handleSubmit } = useExpenseForm();
+onMounted(() => {
+  categoriesStore.getAll();
+});
+
+const { initialState, translatedItems, handleSubmit } = useExpenseForm();
 </script>
