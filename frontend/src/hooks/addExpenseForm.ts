@@ -8,6 +8,7 @@ interface InitialState {
   categoryId: number | null;
   amount: number | null;
   price: number | null;
+  currency: "TRY" | "USD";
 }
 
 export function useExpenseForm() {
@@ -19,6 +20,7 @@ export function useExpenseForm() {
     categoryId: null,
     amount: null,
     price: null,
+    currency: "USD",
   });
 
   function translatedItems() {
@@ -35,6 +37,7 @@ export function useExpenseForm() {
       categoryId: initialState.categoryId,
       amount: Number(initialState.amount),
       price: Number(initialState.price),
+      currency: initialState.currency,
     };
     try {
       await expenseStore.addExpense(data);

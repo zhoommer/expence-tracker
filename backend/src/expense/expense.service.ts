@@ -1,19 +1,22 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
+import { PriceService } from "src/common/formatter/priceService";
 import { CreateExpenseDto } from "./dto/createExpense.dto";
 import { CustomException } from "src/common/exceptions/custom-exception";
-import { ExpenseResponse } from "./types/expenseResponse.type";
-import { ListAllResponse } from "./types/listAllExpenseResponse.type";
+import { Expense } from "./types/expense.type";
 
 @Injectable()
 export class ExpenseService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private priceService: PriceService,
+  ) {}
 
   async create(
     createExpenseDto: CreateExpenseDto,
     userId: string,
-  ): Promise<ExpenseResponse> {
-    const { name, categoryId, amount, price } = createExpenseDto;
+  ): Promise<{ message: string; data: Expense }> {
+    const { name, categoryId, amount, price, currency } = createExpenseDto;
     const category = await this.prisma.categories.findUnique({
       where: { id: categoryId },
     });
@@ -35,24 +38,49 @@ export class ExpenseService {
         userId,
         amount,
         price,
+        currency,
       },
     });
 
     return {
       message: "Expense created successfully",
-      data: expense,
+      data: {
+        id: expense.id,
+        name: expense.name,
+        categoryId: expense.categoryId,
+        category: category.name,
+        amount: expense.amount,
+        price: this.priceService.formatPrice(expense.price, expense.currency),
+        createdAt: expense.createdAt.toLocaleString(),
+        updatedAt: expense.updatedAt.toLocaleString(),
+      },
     };
   }
 
-  async getAll(userId: string): Promise<ListAllResponse> {
+  async getAll(userId: string): Promise<{ message: string; data: Expense[] }> {
     try {
       const allExpenses = await this.prisma.expense.findMany({
         where: { userId },
+        include: { category: true },
       });
 
       return {
         message: "All expenses fetch successfully",
-        data: allExpenses,
+        data: allExpenses.map((expense) => {
+          return {
+            id: expense.id,
+            name: expense.name,
+            categoryId: expense.categoryId,
+            category: expense.category.name,
+            amount: expense.amount,
+            price: this.priceService.formatPrice(
+              expense.price,
+              expense.currency,
+            ),
+            createdAt: expense.createdAt.toLocaleString(),
+            updatedAt: expense.updatedAt.toLocaleString(),
+          };
+        }),
       };
     } catch (error) {
       throw new CustomException(
@@ -63,16 +91,28 @@ export class ExpenseService {
     }
   }
 
-  async getById(expenseId: string): Promise<ExpenseResponse> {
+  async getById(
+    expenseId: string,
+  ): Promise<{ message: string; data: Expense }> {
     try {
       const expense = await this.prisma.expense.findUnique({
         where: {
           id: Number(expenseId),
         },
+        include: { category: true },
       });
       return {
         message: "Expense fetch successfully",
-        data: expense,
+        data: {
+          id: expense.id,
+          name: expense.name,
+          categoryId: expense.categoryId,
+          category: expense.category.name,
+          amount: expense.amount,
+          price: this.priceService.formatPrice(expense.price, expense.currency),
+          createdAt: expense.createdAt.toLocaleString(),
+          updatedAt: expense.updatedAt.toLocaleString(),
+        },
       };
     } catch (error) {
       throw new CustomException(
@@ -86,7 +126,7 @@ export class ExpenseService {
   async update(
     expenseId: string,
     dto: CreateExpenseDto,
-  ): Promise<ExpenseResponse> {
+  ): Promise<{ message: string; data: Expense }> {
     try {
       const updatedExpense = await this.prisma.expense.update({
         where: {
@@ -98,26 +138,52 @@ export class ExpenseService {
           amount: dto.amount,
           price: dto.price,
         },
+        include: { category: true },
       });
       return {
         message: "Expense updated successfully",
-        data: updatedExpense,
+        data: {
+          id: updatedExpense.id,
+          name: updatedExpense.name,
+          categoryId: updatedExpense.categoryId,
+          category: updatedExpense.category.name,
+          amount: updatedExpense.amount,
+          price: this.priceService.formatPrice(
+            updatedExpense.price,
+            updatedExpense.currency,
+          ),
+          createdAt: updatedExpense.createdAt.toLocaleString(),
+          updatedAt: updatedExpense.updatedAt.toLocaleString(),
+        },
       };
     } catch (error) {
       throw new CustomException("Expense not updated", 404, error);
     }
   }
 
-  async delete(expenseId: string): Promise<ExpenseResponse> {
+  async delete(expenseId: string): Promise<{ message: string; data: Expense }> {
     try {
       const response = await this.prisma.expense.delete({
         where: {
           id: Number(expenseId),
         },
+        include: { category: true },
       });
       return {
         message: "Expense successfully deleted",
-        data: response,
+        data: {
+          id: response.id,
+          name: response.name,
+          categoryId: response.categoryId,
+          category: response.category.name,
+          amount: response.amount,
+          price: this.priceService.formatPrice(
+            response.price,
+            response.currency,
+          ),
+          createdAt: response.createdAt.toLocaleString(),
+          updatedAt: response.updatedAt.toLocaleString(),
+        },
       };
     } catch (error) {
       throw new CustomException("Expense cannot delete", 400, error);

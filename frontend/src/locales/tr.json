@@ -19,9 +19,12 @@
   "phone number": "Telefon numarası",
   "add expense": "Harcama Ekle",
   "expense": "Harcama",
+  "search": "Arama",
   "category": "Kategori",
   "amount": "Miktar",
   "price": "Fiyat",
+  "createdAt": "Oluşturma Tarihi",
+  "updatedAt": "Güncelleme Tarihi",
   "close": "Kapat",
   "save": "Kaydet",
   "Food and Beverages": "Gıda ve İçecek",
@@ -38,5 +41,6 @@
   "Child and Pet": "Çocuk ve Evcil Hayvan Masrafları",
   "Other": "Diğer",
 
-  "Your expense has been added successfully.": "Harcamanız başarıyla eklendi."
+  "Your expense has been added successfully.": "Harcamanız başarıyla eklendi.",
+  "currency": "Para birimi"
 }
