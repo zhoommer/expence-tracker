@@ -42,6 +42,19 @@
               required
             ></v-text-field>
           </v-col>
+
+          <v-col>
+            <v-select
+              v-model="initialState.currency"
+              :label="$t('currency') + '*'"
+              :items="[
+                { label: 'USD', value: 'USD' },
+                { label: 'TRY', value: 'TRY' },
+              ]"
+              item-title="label"
+              item-value="value"
+            ></v-select>
+          </v-col>
         </v-row>
       </v-card-text>
 

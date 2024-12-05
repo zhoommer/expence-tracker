@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import ExpenseTable from "@/components/tables/ExpenseTable.vue";
+</script>
+
 <template>
-  <h1>Expenses View</h1>
+  <v-container class="h-100">
+    <ExpenseTable />
+  </v-container>
 </template>

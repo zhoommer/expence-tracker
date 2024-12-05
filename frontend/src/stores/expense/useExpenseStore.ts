@@ -22,13 +22,24 @@ export const useExpenseStore = defineStore("expense", {
       const client = new ExpenseService();
       const expenseAlertMessages = new ExpenseAlertMessages();
       try {
-        await client.create(data);
-        alertStore.success({
+        const response = await client.create(data);
+        await alertStore.success({
           title: "",
           text: expenseAlertMessages.successAddExpense(),
         });
+        this.expenses?.push(response.data);
       } catch (error) {
         this.error = "An error occurred while recording the expense.";
+      }
+    },
+
+    async getAllExpenses() {
+      const client = new ExpenseService();
+      try {
+        const response = await client.getAll();
+        this.expenses = response.data;
+      } catch (error) {
+        this.error = "An error occurred while fetching expenses.";
       }
     },
   },

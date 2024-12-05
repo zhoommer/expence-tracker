@@ -3,17 +3,17 @@ export interface AddExpense {
   categoryId: number | null;
   amount: number | null;
   price: number | null;
+  currency: "USD" | "TRY";
 }
 
 export interface Expense {
+  id: number;
   name: string;
   categoryId: number;
-  userId: number;
+  category: string;
   amount: number;
-  price: number;
-}
-
-export interface AddExpenseResponse {
-  message: string;
-  data: Expense[];
+  price: string;
+  currency: "USD" | "TRY";
+  createdAt: string;
+  updatedAt: string;
 }

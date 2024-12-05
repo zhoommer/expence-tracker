@@ -1,3 +1,4 @@
+import { Currency } from "@prisma/client";
 import { IsNotEmpty, IsNumber, IsPositive } from "class-validator";
 
 export class CreateExpenseDto {
@@ -16,4 +17,7 @@ export class CreateExpenseDto {
   @IsPositive({ message: "price must be a positive number" })
   @IsNotEmpty({ message: "price cannot be empty" })
   price: number;
+
+  @IsNotEmpty({ message: "currency cannot be empty" })
+  currency: Currency;
 }

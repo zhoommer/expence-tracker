@@ -18,6 +18,11 @@ enum Gender {
   FEMALE
 }
 
+enum Currency {
+  TRY
+  USD
+}
+
 model User {
   id     String  @id @default(uuid())
   email  String  @unique @db.VarChar(100)
@@ -46,6 +51,7 @@ model Expense {
   name       String     @db.VarChar(255)
   amount     Float?
   price      Float
+  currency   Currency?
   categoryId Int
   category   Categories @relation(fields: [categoryId], references: [id])
 

@@ -19,9 +19,12 @@
   "phone number": "Phone Number",
   "add expense": "Add Expense",
   "expense": "Expense",
+  "search": "Search",
   "category": "Category",
   "amount": "Amount",
   "price": "Price",
+  "createdAt": "Created at",
+  "updatedAt": "Updated at",
   "close": "Close",
   "save": "Save",
   "Food and Beverages": "Food and Beverages",
@@ -37,5 +40,6 @@
   "Digital Subscriptions": "Digital Subscriptions",
   "Child and Pet": "Child and Pet",
   "Other": "Other",
-  "Your expense has been added successfully.": "Your expense has been added successfully."
+  "Your expense has been added successfully.": "Your expense has been added successfully.",
+  "currency": "Currency"
 }
