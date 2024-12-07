@@ -1,5 +1,5 @@
 <template>
-  <v-card v-if="!loading" elevation="3" class="pa-10">
+  <v-card v-if="!chartStore.loading" elevation="3" class="pa-10">
     <Doughnut
       :data="data"
       :options="{ responsive: true, maintainAspectRatio: false }"
@@ -14,7 +14,6 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "vue-chartjs";
 
 const chartStore = useChartStore();
-const loading = chartStore.loading;
 
 export interface Data {
   labels: string[];

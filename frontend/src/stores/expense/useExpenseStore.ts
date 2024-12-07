@@ -3,6 +3,7 @@ import { useAlertStore } from "../alert/useAlertStore";
 import { ExpenseService } from "@/services/expenseService";
 import type { AddExpense, Expense } from "@/definations/expense.type";
 import { ExpenseAlertMessages } from "@/utils/alertMessages/expense/alertExpenseMessages";
+import { useChartStore } from "../chart/useChartStore";
 
 export const useExpenseStore = defineStore("expense", {
   state: () => ({
@@ -19,6 +20,7 @@ export const useExpenseStore = defineStore("expense", {
 
     async addExpense(data: AddExpense) {
       const alertStore = useAlertStore();
+      const chartStore = useChartStore();
       const client = new ExpenseService();
       const expenseAlertMessages = new ExpenseAlertMessages();
       try {
@@ -28,6 +30,7 @@ export const useExpenseStore = defineStore("expense", {
           text: expenseAlertMessages.successAddExpense(),
         });
         this.expenses?.push(response.data);
+        await chartStore.getTotalExpensesByCategory();
       } catch (error) {
         this.error = "An error occurred while recording the expense.";
       }

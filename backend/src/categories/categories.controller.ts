@@ -17,4 +17,10 @@ export class CategoriesController {
   getTotalExpensesByCategory(@GetCurrentUserId() userId: string) {
     return this.categoriesService.getTotalExpensesByCategory(userId);
   }
+
+  @Get("/check-expenses")
+  @HttpCode(HttpStatus.OK)
+  async getCategoryExpenseDetails(@GetCurrentUserId() userId: string) {
+    return this.categoriesService.getAllCategoryExpenseDetails(userId);
+  }
 }
