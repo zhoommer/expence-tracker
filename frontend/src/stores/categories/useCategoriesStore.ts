@@ -1,7 +1,6 @@
 import type { Categories } from "@/definations/categories.type";
 import type { TotalExpenses } from "@/definations/expense.type";
 import axiosClient from "@/services/axiosIntance";
-import { ExpenseService } from "@/services/expenseService";
 import { defineStore } from "pinia";
 
 export const useCategoriesStore = defineStore("categories", {
@@ -17,7 +16,7 @@ export const useCategoriesStore = defineStore("categories", {
       state.totalExpenses.map((expense) => expense.categoryName);
     },
     datasets: (state) =>
-      state.totalExpenses.map((expense) => expense.totalExpense.TRY),
+      state.totalExpenses.map((expense) => expense.totalExpense),
   },
 
   actions: {
@@ -27,21 +26,6 @@ export const useCategoriesStore = defineStore("categories", {
         this.categories = response.data.data;
       } catch (error) {
         this.error = "An error occurred while fetching categories";
-      }
-    },
-
-    async getTotalExpensesByCategory() {
-      const client = new ExpenseService();
-      this.loading = true;
-      this.error = null;
-      try {
-        const response = await client.getTotalExpensesByCategory();
-        this.totalExpenses = response.data;
-      } catch (error) {
-        this.error =
-          "An error occurred while fetching total expenses by category";
-      } finally {
-        this.loading = false;
       }
     },
   },

@@ -21,5 +21,5 @@ export interface Expense {
 export interface TotalExpenses {
   categoryId: string;
   categoryName: string;
-  totalExpense: { TRY: string; USD: string };
+  totalExpense: { TRY: number; USD: number };
 }

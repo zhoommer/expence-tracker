@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
-import { ExpenseService } from "@/services/expenseService";
 import { useAlertStore } from "../alert/useAlertStore";
+import { ExpenseService } from "@/services/expenseService";
 import type { AddExpense, Expense } from "@/definations/expense.type";
 import { ExpenseAlertMessages } from "@/utils/alertMessages/expense/alertExpenseMessages";
 
