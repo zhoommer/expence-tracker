@@ -36,10 +36,10 @@
         <div class="d-flex justify-center mt-5">
           <v-btn
             type="submit"
-            :color="themeStore.color"
             width="300"
-            :loading="loading"
             append-icon="mdi-login"
+            :color="themeStore.color"
+            :loading="userStore.loading"
             >{{ $t("log in") }}</v-btn
           >
         </div>
@@ -59,7 +59,6 @@ const themeStore = useThemeStore();
 const userStore = useUserStore();
 
 const show = ref(false);
-const loading = userStore.loading;
 
 const formData: { email: string; password: string } = reactive({
   email: "",

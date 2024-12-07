@@ -4,7 +4,7 @@ import Appbar from "./appbar/Appbar.vue";
 import Drawer from "./drawer/Drawer.vue";
 import { useThemeStore } from "@/stores/theme/useThemeStore";
 import { useAlertStore } from "@/stores/alert/useAlertStore";
-import { ref, defineProps, onMounted } from "vue";
+import { ref, defineProps, onMounted, watch } from "vue";
 import AddExpence from "./forms/AddExpence.vue";
 import { useExpenseStore } from "@/stores/expense/useExpenseStore";
 import { useCategoriesStore } from "@/stores/categories/useCategoriesStore";

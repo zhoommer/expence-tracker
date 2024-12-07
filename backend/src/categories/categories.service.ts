@@ -1,15 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { CustomException } from "src/common/exceptions/custom-exception";
 import { PrismaService } from "src/prisma/prisma.service";
-import { PriceService } from "src/common/formatter/priceService";
 import { TotalExpensesByCategory } from "./types/totalExpensesByCategoryResponse";
 
 @Injectable()
 export class CategoriesService {
-  constructor(
-    private prisma: PrismaService,
-    private priceService: PriceService,
-  ) {}
+  constructor(private prisma: PrismaService) {}
 
   async get(): Promise<{
     message: string;
@@ -20,7 +16,7 @@ export class CategoriesService {
 
       return {
         message: "Categories fetched successfully",
-        data: categories,
+        data: categories.sort((a, b) => a.id - b.id),
       };
     } catch (error) {
       throw new CustomException(
@@ -39,6 +35,7 @@ export class CategoriesService {
         select: {
           id: true,
           name: true,
+          categoryLimits: true,
           expenses: {
             where: {
               userId: userId,
@@ -74,5 +71,32 @@ export class CategoriesService {
       message: "Total expenses were calculated by categories.",
       data: totalExpensesByCategory,
     };
+  }
+
+  async getAllCategoryExpenseDetails(userId: string) {
+    const categories = await this.prisma.categoryLimit.findMany({
+      where: { userId },
+      include: {
+        category: {
+          include: {
+            expenses: true,
+          },
+        },
+      },
+    });
+
+    return categories.map((categoryLimit) => {
+      const totalSpent = categoryLimit.category.expenses.reduce(
+        (sum, expense) => sum + (expense.price || 0),
+        0,
+      );
+
+      return {
+        categoryName: categoryLimit.category.name,
+        limit: categoryLimit.limit,
+        totalSpent,
+        isLimitExceeded: totalSpent > (categoryLimit.limit || 0),
+      };
+    });
   }
 }
