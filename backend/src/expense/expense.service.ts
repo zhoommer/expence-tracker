@@ -4,6 +4,7 @@ import { PriceService } from "src/common/formatter/priceService";
 import { CreateExpenseDto } from "./dto/createExpense.dto";
 import { CustomException } from "src/common/exceptions/custom-exception";
 import { Expense } from "./types/expense.type";
+import path from "path";
 
 @Injectable()
 export class ExpenseService {

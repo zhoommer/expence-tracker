@@ -1,4 +1,8 @@
-import type { AddExpense, Expense } from "@/definations/expense.type";
+import type {
+  AddExpense,
+  Expense,
+  TotalExpenses,
+} from "@/definations/expense.type";
 import axiosClient from "./axiosIntance";
 
 export class ExpenseService {
@@ -17,6 +21,17 @@ export class ExpenseService {
       message: string;
       data: Expense[];
     }>("/expense/get-all");
+    return response.data;
+  }
+
+  async getTotalExpensesByCategory(): Promise<{
+    message: string;
+    data: TotalExpenses[];
+  }> {
+    const response = await this.client.get<{
+      message: string;
+      data: TotalExpenses[];
+    }>("/categories/get-total-expenses-by-category");
     return response.data;
   }
 }

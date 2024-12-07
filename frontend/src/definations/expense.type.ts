@@ -17,3 +17,9 @@ export interface Expense {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface TotalExpenses {
+  categoryId: string;
+  categoryName: string;
+  totalExpense: { TRY: string; USD: string };
+}
