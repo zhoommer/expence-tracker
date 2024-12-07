@@ -64,8 +64,8 @@ export class CategoriesService {
             categoryId: category.id,
             categoryName: category.name,
             totalExpense: {
-              TRY: this.priceService.formatPrice(tryExpenses, "TRY"),
-              USD: this.priceService.formatPrice(usdExpenses, "USD"),
+              TRY: tryExpenses,
+              USD: usdExpenses,
             },
           };
         }),

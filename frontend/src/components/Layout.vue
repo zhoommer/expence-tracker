@@ -4,9 +4,11 @@ import Appbar from "./appbar/Appbar.vue";
 import Drawer from "./drawer/Drawer.vue";
 import { useThemeStore } from "@/stores/theme/useThemeStore";
 import { useAlertStore } from "@/stores/alert/useAlertStore";
-import { ref, defineProps } from "vue";
+import { ref, defineProps, onMounted } from "vue";
 import AddExpence from "./forms/AddExpence.vue";
 import { useExpenseStore } from "@/stores/expense/useExpenseStore";
+import { useCategoriesStore } from "@/stores/categories/useCategoriesStore";
+import { useChartStore } from "@/stores/chart/useChartStore";
 
 interface Props {
   isAuth: boolean;
@@ -15,9 +17,16 @@ interface Props {
 const themeStore = useThemeStore();
 const alertStore = useAlertStore();
 const expenseStore = useExpenseStore();
+const categoryStore = useCategoriesStore();
+const chartStore = useChartStore();
 const props = defineProps<Props>();
 
 const show = ref(false);
+
+onMounted(() => {
+  categoryStore.getAll();
+  chartStore.getTotalExpensesByCategory();
+});
 </script>
 
 <template>

@@ -88,16 +88,9 @@
 import { useExpenseStore } from "@/stores/expense/useExpenseStore";
 import { useExpenseForm } from "@/hooks/addExpenseForm";
 import { useThemeStore } from "@/stores/theme/useThemeStore";
-import { useCategoriesStore } from "@/stores/categories/useCategoriesStore";
-import { onMounted } from "vue";
 
 const expenseStore = useExpenseStore();
 const themeStore = useThemeStore();
-const categoriesStore = useCategoriesStore();
-
-onMounted(() => {
-  categoriesStore.getAll();
-});
 
 const { initialState, translatedItems, handleSubmit } = useExpenseForm();
 </script>
