@@ -23,6 +23,9 @@ import en from "./locales/en.json";
 import tr from "./locales/tr.json";
 import { useLangStore } from "./stores/lang/useLangStore";
 
+// apex chart
+import VueApexCharts from "vue3-apexcharts";
+
 const app = createApp(App);
 const pinia = createPinia();
 const langStore = useLangStore(pinia);
@@ -53,5 +56,7 @@ app.use(pinia);
 app.use(router);
 app.use(vuetify);
 app.use(i18n);
+app.use(VueApexCharts);
+app.component("ApexChart", VueApexCharts);
 
 app.mount("#app");

@@ -8,6 +8,7 @@
     class="mt-16 me-5 bounce"
     position="absolute"
     location="top end"
+    style="z-index: 9999"
   >
     <template v-slot:append>
       <v-btn icon="mdi-close" size="x-small" @click="alertStore.hideAlert()">

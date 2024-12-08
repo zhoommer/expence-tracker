@@ -4,6 +4,7 @@ import type {
   TotalExpenses,
 } from "@/definations/expense.type";
 import axiosClient from "./axiosIntance";
+import type { OverLimitedExpensesByCategory } from "@/definations/categories.type";
 
 export class ExpenseService {
   private client = axiosClient;
@@ -32,6 +33,15 @@ export class ExpenseService {
       message: string;
       data: TotalExpenses[];
     }>("/categories/get-total-expenses-by-category");
+    return response.data;
+  }
+
+  async getOverlimitedExpensesByCategory(): Promise<
+    OverLimitedExpensesByCategory[]
+  > {
+    const response = await this.client.get<OverLimitedExpensesByCategory[]>(
+      "/categories/check-expenses",
+    );
     return response.data;
   }
 }

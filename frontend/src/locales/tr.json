@@ -42,5 +42,8 @@
   "Other": "Diğer",
 
   "Your expense has been added successfully.": "Harcamanız başarıyla eklendi.",
-  "currency": "Para birimi"
+  "currency": "Para birimi",
+
+  "total spending by category": "Kategorilere Göre Toplam Harcamalar",
+  "exceeding the limit": "Limiti Aşan Harcamalar"
 }

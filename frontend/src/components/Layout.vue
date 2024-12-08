@@ -2,10 +2,10 @@
 import Alert from "./alerts/Alert.vue";
 import Appbar from "./appbar/Appbar.vue";
 import Drawer from "./drawer/Drawer.vue";
+import AddExpence from "./forms/AddExpence.vue";
 import { useThemeStore } from "@/stores/theme/useThemeStore";
 import { useAlertStore } from "@/stores/alert/useAlertStore";
-import { ref, defineProps, onMounted, watch } from "vue";
-import AddExpence from "./forms/AddExpence.vue";
+import { ref, defineProps, onMounted } from "vue";
 import { useExpenseStore } from "@/stores/expense/useExpenseStore";
 import { useCategoriesStore } from "@/stores/categories/useCategoriesStore";
 import { useChartStore } from "@/stores/chart/useChartStore";
@@ -46,8 +46,8 @@ onMounted(() => {
                 v-bind="props"
                 :variant="themeStore.mode === 'light' ? 'flat' : 'tonal'"
                 :color="themeStore.color"
+                :size="$vuetify.display.mobile ? 'small' : 'large'"
                 icon="mdi-plus"
-                size="large"
                 position="absolute"
                 location="bottom end"
                 class="ma-16"
