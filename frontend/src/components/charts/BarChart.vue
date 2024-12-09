@@ -8,7 +8,7 @@
     <apexchart
       type="bar"
       width="100%"
-      height="100%"
+      height="80%"
       :options="chartOptions"
       :series="series"
     >
@@ -19,16 +19,16 @@
 <script setup lang="ts">
 import { useCategoriesStore } from "@/stores/categories/useCategoriesStore";
 import { reactive } from "vue";
-
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 const categoryStore = useCategoriesStore();
-
 const series = reactive([
   {
-    name: "Limit",
+    name: t("limit"),
     data: categoryStore.overLimitedExpenses.map((expense) => expense.limit),
   },
   {
-    name: "Spending",
+    name: t("spending"),
     data: categoryStore.overLimitedExpenses.map(
       (expense) => expense.totalSpent,
     ),
@@ -62,7 +62,7 @@ const chartOptions = reactive({
   },
   yaxis: {
     title: {
-      text: "$ (Expenses)",
+      text: t("expenses") + " ₺",
     },
   },
   fill: {

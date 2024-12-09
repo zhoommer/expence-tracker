@@ -45,5 +45,7 @@
   "currency": "Para birimi",
 
   "total spending by category": "Kategorilere Göre Toplam Harcamalar",
-  "exceeding the limit": "Limiti Aşan Harcamalar"
+  "exceeding the limit": "Limiti Aşan Harcamalar",
+  "limit": "Limit",
+  "spending": "Harcama"
 }

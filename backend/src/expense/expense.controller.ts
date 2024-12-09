@@ -8,6 +8,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
 } from "@nestjs/common";
 import { ExpenseService } from "./expense.service";
@@ -32,8 +33,14 @@ export class ExpenseController {
   @Get("/get-all")
   @HttpCode(HttpStatus.OK)
   @UseGuards(AtGuard)
-  async getAll(@GetCurrentUserId() userId: string) {
-    return this.expenseService.getAll(userId);
+  async getAll(
+    @GetCurrentUserId() userId: string,
+    @Query("page") page?: string,
+    @Query("limit") limit?: string,
+  ) {
+    const parsedPage = page ? parseInt(page) : undefined;
+    const parsedLimit = limit ? parseInt(limit) : 3;
+    return this.expenseService.getAll(userId, parsedPage, parsedLimit);
   }
 
   @Get("/get-by-id/:expenseId")

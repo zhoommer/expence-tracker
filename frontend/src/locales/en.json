@@ -43,5 +43,7 @@
   "Your expense has been added successfully.": "Your expense has been added successfully.",
   "currency": "Currency",
   "total spending by category": "Total Spending By Category",
-  "exceeding the limit": "Exceeding the limit"
+  "exceeding the limit": "Exceeding the limit",
+  "limit": "Limit",
+  "spending": "Spending"
 }

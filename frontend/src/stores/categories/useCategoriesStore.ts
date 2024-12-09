@@ -26,11 +26,15 @@ export const useCategoriesStore = defineStore("categories", {
 
   actions: {
     async getAll() {
+      this.loading = true;
+      this.error = null;
       try {
         const response = await axiosClient.get("/categories/get-all");
         this.categories = response.data.data;
       } catch (error) {
         this.error = "An error occurred while fetching categories";
+      } finally {
+        this.loading = false;
       }
     },
 
@@ -43,6 +47,8 @@ export const useCategoriesStore = defineStore("categories", {
         this.overLimitedExpenses = response;
       } catch (error) {
         this.error = "An error occurred while fething over limited expenses";
+      } finally {
+        this.loading = false;
       }
     },
   },

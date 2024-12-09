@@ -2,13 +2,13 @@
   <v-card
     v-if="!chartStore.loading"
     elevation="3"
-    :title="$t('total spending by category')"
+    :title="props.title"
     :max-height="!$vuetify.display.mobile ? '400' : ''"
     :min-height="!$vuetify.display.mobile ? '400' : ''"
   >
     <apexchart
       type="donut"
-      :series="chartStore.data"
+      :series="props.series"
       :options="chartOptions"
       width="100%"
       height="80%"
@@ -17,15 +17,23 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from "vue";
+import { reactive, defineProps } from "vue";
 import { useChartStore } from "@/stores/chart/useChartStore";
+import { convertedLabels } from "@/utils/convertedLabels/convertedLabels";
 
 const chartStore = useChartStore();
+
+interface Props {
+  title: string;
+  series: number[];
+}
 
 export interface Data {
   labels: string[];
   datasets: { backgroundColor: string[]; data: number[] }[];
 }
+
+const props = defineProps<Props>();
 
 const chartOptions = reactive({
   chart: {
@@ -102,7 +110,7 @@ const chartOptions = reactive({
       },
     },
   ],
-  labels: chartStore.labels,
+  labels: convertedLabels(chartStore.labels),
   colors: chartStore.backgroundColor,
 });
 </script>

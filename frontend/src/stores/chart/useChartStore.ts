@@ -4,7 +4,8 @@ import { ExpenseService } from "@/services/expenseService";
 export const useChartStore = defineStore("chart", {
   state: () => ({
     labels: [""] as string[],
-    data: [] as number[],
+    dataTRY: [] as number[],
+    dataUSD: [] as number[],
     backgroundColor: [
       "#FF6384",
       "#36A2EB",
@@ -32,7 +33,8 @@ export const useChartStore = defineStore("chart", {
       try {
         const response = await client.getTotalExpensesByCategory();
         this.labels = response.data.map((expense) => expense.categoryName);
-        this.data = response.data.map((expense) => expense.totalExpense.TRY);
+        this.dataTRY = response.data.map((expense) => expense.totalExpense.TRY);
+        this.dataUSD = response.data.map((expense) => expense.totalExpense.USD);
       } catch (error) {
         this.error =
           "An error occurred while fetching total expenses by category";
