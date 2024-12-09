@@ -17,11 +17,25 @@ export class ExpenseService {
     return response.data;
   }
 
-  async getAll(): Promise<{ message: string; data: Expense[] }> {
+  async getAll(
+    page?: number | null,
+    limit?: number | null,
+  ): Promise<{
+    message: string;
+    data: Expense[];
+    totalElements: number;
+  }> {
+    const queryParams = {
+      params: {
+        page: page ? page : 1,
+        limit: limit ? limit : 5,
+      },
+    };
     const response = await this.client.get<{
       message: string;
       data: Expense[];
-    }>("/expense/get-all");
+      totalElements: number;
+    }>("/expense/get-all", queryParams);
     return response.data;
   }
 

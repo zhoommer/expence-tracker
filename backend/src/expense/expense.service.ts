@@ -4,7 +4,6 @@ import { PriceService } from "src/common/formatter/priceService";
 import { CreateExpenseDto } from "./dto/createExpense.dto";
 import { CustomException } from "src/common/exceptions/custom-exception";
 import { Expense } from "./types/expense.type";
-import path from "path";
 
 @Injectable()
 export class ExpenseService {
@@ -58,12 +57,32 @@ export class ExpenseService {
     };
   }
 
-  async getAll(userId: string): Promise<{ message: string; data: Expense[] }> {
+  async getAll(
+    userId: string,
+    page?: number,
+    limit?: number,
+  ): Promise<{
+    message: string;
+    data: Expense[];
+    totalElements: number;
+  }> {
+    const offset = (page - 1) * limit;
     try {
       const allExpenses = await this.prisma.expense.findMany({
         where: { userId },
+        take: limit,
+        skip: offset,
+        orderBy: {
+          createdAt: "desc",
+        },
         include: { category: true },
       });
+
+      const totalExpenses = await this.prisma.expense.findMany({
+        where: { userId },
+      });
+
+      const totalElements = totalExpenses.length;
 
       return {
         message: "All expenses fetch successfully",
@@ -82,6 +101,7 @@ export class ExpenseService {
             updatedAt: expense.updatedAt.toLocaleString(),
           };
         }),
+        totalElements,
       };
     } catch (error) {
       throw new CustomException(

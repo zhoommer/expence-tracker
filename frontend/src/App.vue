@@ -1,27 +1,34 @@
 <script setup lang="ts">
 import { computed, onMounted } from "vue";
-import Layout from "./components/Layout.vue";
 import { useThemeStore } from "./stores/theme/useThemeStore";
 import { useUserStore } from "./stores/user/useUserStore";
 import { useCategoriesStore } from "./stores/categories/useCategoriesStore";
-import Skeleton from "./components/loader/Skeleton.vue";
+import { useChartStore } from "./stores/chart/useChartStore";
+import Layout from "./components/Layout.vue";
 
 const themeStore = useThemeStore();
 const userStore = useUserStore();
 const categoryStore = useCategoriesStore();
+const chartStore = useChartStore();
 
 const isAuth = computed(() => userStore.isAuthenticated);
 
-onMounted(() => {
+onMounted(async () => {
   userStore.checkAuth();
-  userStore.getMe();
-  categoryStore.getOverlimitedExpenses();
+  await userStore.getMe();
+  await categoryStore.getOverlimitedExpenses();
+  await categoryStore.getAll();
+  await chartStore.getTotalExpensesByCategory();
 });
 </script>
 
 <template>
   <v-theme-provider :theme="themeStore.mode">
-    <Skeleton v-if="userStore.loading && categoryStore.loading" />
-    <Layout :isAuth="isAuth" v-else />
+    <Layout
+      :isAuth="isAuth"
+      :loading="
+        userStore.loading || categoryStore.loading || chartStore.loading
+      "
+    />
   </v-theme-provider>
 </template>

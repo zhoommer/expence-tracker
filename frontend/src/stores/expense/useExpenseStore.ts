@@ -8,6 +8,8 @@ import { useChartStore } from "../chart/useChartStore";
 export const useExpenseStore = defineStore("expense", {
   state: () => ({
     expenses: null as Expense[] | null,
+    cursor: null as number | null,
+    totalElements: null as number | null,
     dialog: false as boolean,
     loading: false as boolean,
     error: null as string | null,
@@ -36,11 +38,12 @@ export const useExpenseStore = defineStore("expense", {
       }
     },
 
-    async getAllExpenses() {
+    async getAllExpenses(page?: number, limit?: number) {
       const client = new ExpenseService();
       try {
-        const response = await client.getAll();
+        const response = await client.getAll(page, limit);
         this.expenses = response.data;
+        this.totalElements = response.totalElements;
       } catch (error) {
         this.error = "An error occurred while fetching expenses.";
       }
