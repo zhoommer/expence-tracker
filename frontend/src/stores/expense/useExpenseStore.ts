@@ -38,10 +38,10 @@ export const useExpenseStore = defineStore("expense", {
       }
     },
 
-    async getAllExpenses(page?: number, limit?: number) {
+    async getAllExpenses(query?: string, page?: number, limit?: number) {
       const client = new ExpenseService();
       try {
-        const response = await client.getAll(page, limit);
+        const response = await client.getAll(query, page, limit);
         this.expenses = response.data;
         this.totalElements = response.totalElements;
       } catch (error) {

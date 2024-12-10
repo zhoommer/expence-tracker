@@ -35,12 +35,13 @@ export class ExpenseController {
   @UseGuards(AtGuard)
   async getAll(
     @GetCurrentUserId() userId: string,
+    @Query("query") query?: string,
     @Query("page") page?: string,
     @Query("limit") limit?: string,
   ) {
     const parsedPage = page ? parseInt(page) : undefined;
     const parsedLimit = limit ? parseInt(limit) : 3;
-    return this.expenseService.getAll(userId, parsedPage, parsedLimit);
+    return this.expenseService.getAll(userId, query, parsedPage, parsedLimit);
   }
 
   @Get("/get-by-id/:expenseId")
