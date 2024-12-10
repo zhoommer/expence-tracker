@@ -59,6 +59,7 @@ export class ExpenseService {
 
   async getAll(
     userId: string,
+    query?: string,
     page?: number,
     limit?: number,
   ): Promise<{
@@ -69,7 +70,12 @@ export class ExpenseService {
     const offset = (page - 1) * limit;
     try {
       const allExpenses = await this.prisma.expense.findMany({
-        where: { userId },
+        where: {
+          userId,
+          name: {
+            contains: query,
+          },
+        },
         take: limit,
         skip: offset,
         orderBy: {
@@ -101,7 +107,7 @@ export class ExpenseService {
             updatedAt: expense.updatedAt.toLocaleString(),
           };
         }),
-        totalElements,
+        totalElements: query ? allExpenses.length : totalElements,
       };
     } catch (error) {
       throw new CustomException(

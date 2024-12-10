@@ -6,7 +6,7 @@
       <v-spacer></v-spacer>
 
       <v-text-field
-        v-model="search"
+        v-model="searchQuery"
         density="compact"
         :label="$t('search')"
         prepend-inner-icon="mdi-magnify"
@@ -14,12 +14,13 @@
         flat
         hide-details
         single-line
+        @input="updateSearchQuery"
       ></v-text-field>
     </v-card-title>
 
     <v-divider></v-divider>
     <v-data-table
-      v-model:search="search"
+      v-model="expenseStore.expenses"
       :filter-keys="['name']"
       :headers="headers"
       :items="expenses || []"
@@ -35,21 +36,23 @@
         <div class="d-flex">
           <div class="flex-grow-1">
             <v-pagination
+              :color="themeStore.color"
               :model-value="page"
               :length="pageCount"
-              @update:model-value="updatePage"
+              size="small"
               rounded="circle"
+              @update:model-value="updatePage"
             >
             </v-pagination>
           </div>
           <div class="pe-2">
             <v-select
+              :color="themeStore.color"
               :model-value="limit"
               :items="[5, 10, 15]"
               min-width="80"
               variant="underlined"
               @update:model-value="updateLimit"
-              :color="themeStore.color"
             ></v-select>
           </div>
         </div>
@@ -64,13 +67,14 @@ import { useExpenseStore } from "@/stores/expense/useExpenseStore";
 import { useThemeStore } from "@/stores/theme/useThemeStore";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
+import { debounce } from "chart.js/helpers";
 
 const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 const expenseStore = useExpenseStore();
 const themeStore = useThemeStore();
-const search = ref("");
+const searchQuery = ref<string>((route.query.query as string) || "");
 const page = ref<number>(Number(route.query.page) || 1);
 const limit = ref<number>(Number(route.query.limit) || 5);
 const headers = [
@@ -81,36 +85,36 @@ const headers = [
   { key: "createdAt", title: t("createdAt") },
 ];
 
-function updatePage(newPage: number) {
+function updateURL(updatedParams: Record<string, string>) {
   router.push({
     path: route.path,
     query: {
       ...route.query,
-      page: newPage.toString(),
+      ...updatedParams,
     },
   });
 }
 
-function updateLimit(newLimit: number) {
-  router.push({
-    path: route.path,
-    query: {
-      ...route.query,
-      page: route.query.page,
-      limit: newLimit.toString(),
-    },
-  });
+function updatePage(newPage: number) {
+  updateURL({ page: newPage.toString() });
 }
+
+function updateLimit(newLimit: number) {
+  updateURL({ limit: newLimit.toString() });
+}
+
+const updateSearchQuery = debounce((newQuery: string) => {
+  updateURL({ query: newQuery[0].target?.value });
+}, 500);
+
 watch(
   () => route.query,
   async (newQuery) => {
     page.value = Number(newQuery.page) || 1;
     limit.value = Number(newQuery.limit) || 5;
+    searchQuery.value = (newQuery.query as string) || "";
 
-    await expenseStore.getAllExpenses(
-      Number(newQuery.page),
-      Number(newQuery.limit),
-    );
+    expenseStore.getAllExpenses(searchQuery.value, page.value, limit.value);
   },
 );
 
@@ -123,6 +127,6 @@ const pageCount = computed(() => {
 
 onMounted(() => {
   if (!expenseStore.expenses)
-    expenseStore.getAllExpenses(page.value, limit.value);
+    expenseStore.getAllExpenses(searchQuery.value, page.value, limit.value);
 });
 </script>
