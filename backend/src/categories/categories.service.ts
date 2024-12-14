@@ -86,16 +86,27 @@ export class CategoriesService {
     });
 
     return categories.map((categoryLimit) => {
-      const totalSpent = categoryLimit.category.expenses.reduce(
-        (sum, expense) => sum + (expense.price || 0),
-        0,
-      );
+      const totalSpentTRY = categoryLimit.category.expenses
+        .filter((expense) => expense.currency === "TRY")
+        .reduce((sum, expense) => sum + (expense.price || 0), 0);
+
+      const totalSpentUSD = categoryLimit.category.expenses
+        .filter((expense) => expense.currency === "USD")
+        .reduce((sum, expense) => sum + (expense.price || 0), 0);
 
       return {
-        categoryName: categoryLimit.category.name,
-        limit: categoryLimit.limit,
-        totalSpent,
-        isLimitExceeded: totalSpent > (categoryLimit.limit || 0),
+        overLimitedExpensesTRY: {
+          categoryName: categoryLimit.category.name,
+          limit: categoryLimit.limit,
+          totalSpentTRY,
+          isLimitExceeded: totalSpentTRY > (categoryLimit.limit || 0),
+        },
+        overLimitedExpensesUSD: {
+          categoryName: categoryLimit.category.name,
+          limit: categoryLimit.limit,
+          totalSpentUSD,
+          isLimitExceeded: totalSpentUSD > (categoryLimit.limit || 0),
+        },
       };
     });
   }

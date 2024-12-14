@@ -44,9 +44,9 @@
   "Your expense has been added successfully.": "Harcamanız başarıyla eklendi.",
   "currency": "Para birimi",
 
-  "total spending by category with TRY": "Kategorilere Göre Toplam TRY Harcamaları",
-  "total spending by category with USD": "Kategorilere Göre Toplam USD Harcamaları",
+  "total spending by category": "Kategorilere Göre Toplam Harcamalar",
   "exceeding the limit": "Limiti Aşan Harcamalar",
   "limit": "Limit",
-  "spending": "Harcama"
+  "spending": "Harcama",
+  "delete": "Sil"
 }

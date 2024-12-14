@@ -7,10 +7,13 @@
   >
     <apexchart
       type="bar"
-      width="100%"
+      width="95%"
       height="80%"
       :options="chartOptions"
-      :series="series"
+      :series="[
+        { name: $t('limit'), data: props.limit },
+        { name: $t('spending'), data: props.spending },
+      ]"
     >
     </apexchart>
   </v-card>
@@ -18,22 +21,17 @@
 
 <script setup lang="ts">
 import { useCategoriesStore } from "@/stores/categories/useCategoriesStore";
-import { reactive } from "vue";
+import { reactive, defineProps } from "vue";
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 const categoryStore = useCategoriesStore();
-const series = reactive([
-  {
-    name: t("limit"),
-    data: categoryStore.overLimitedExpenses.map((expense) => expense.limit),
-  },
-  {
-    name: t("spending"),
-    data: categoryStore.overLimitedExpenses.map(
-      (expense) => expense.totalSpent,
-    ),
-  },
-]);
+
+interface Props {
+  limit: number[];
+  spending: number[];
+}
+
+const props = defineProps<Props>();
 
 const chartOptions = reactive({
   chart: {
@@ -57,7 +55,7 @@ const chartOptions = reactive({
   },
   xaxis: {
     categories: categoryStore.overLimitedExpenses.map(
-      (expense) => expense.categoryName,
+      (expense) => expense.overLimitedExpensesTRY.categoryName,
     ),
   },
   yaxis: {

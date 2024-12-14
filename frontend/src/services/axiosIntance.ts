@@ -4,10 +4,7 @@ import type {
   InternalAxiosRequestConfig,
   AxiosResponse,
 } from "axios";
-import { useRouter } from "vue-router";
 import { useUserStore } from "@/stores/user/useUserStore";
-
-const router = useRouter();
 
 // const BASE_URL = import.meta.env.BACKEND_BASE_URL;
 
@@ -42,7 +39,6 @@ axiosClient.interceptors.response.use(
   (error) => {
     if (error.response && error.response.status === 401) {
       localStorage.removeItem("token"); // Çıkış işlemi
-      router.push({ path: "/auth" });
     } else if (error.response && error.response.status === 500) {
       console.log(error.response);
     }

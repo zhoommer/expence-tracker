@@ -60,4 +60,9 @@ export class ExpenseService {
     );
     return response.data;
   }
+
+  async deleteExpense(id: number | null) {
+    const response = await this.client.delete(`/expense/delete/${id}`);
+    return response.data;
+  }
 }

@@ -2,7 +2,7 @@
   <v-card
     v-if="!chartStore.loading"
     elevation="3"
-    :title="props.title"
+    :title="$t('total spending by category')"
     :max-height="!$vuetify.display.mobile ? '400' : ''"
     :min-height="!$vuetify.display.mobile ? '400' : ''"
   >
@@ -24,7 +24,6 @@ import { convertedLabels } from "@/utils/convertedLabels/convertedLabels";
 const chartStore = useChartStore();
 
 interface Props {
-  title: string;
   series: number[];
 }
 

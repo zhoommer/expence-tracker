@@ -22,6 +22,27 @@ export const useCategoriesStore = defineStore("categories", {
     },
     datasets: (state) =>
       state.totalExpenses.map((expense) => expense.totalExpense),
+
+    limitTRY: (state): number[] => {
+      return state.overLimitedExpenses.map(
+        (expense) => expense.overLimitedExpensesTRY.limit,
+      );
+    },
+    limitUSD: (state): number[] => {
+      return state.overLimitedExpenses.map(
+        (expense) => expense.overLimitedExpensesUSD.limit,
+      );
+    },
+    spendingTRY: (state): number[] => {
+      return state.overLimitedExpenses.map(
+        (expense) => expense.overLimitedExpensesTRY.totalSpentTRY,
+      );
+    },
+    spendingUSD: (state): number[] => {
+      return state.overLimitedExpenses.map(
+        (expense) => expense.overLimitedExpensesUSD.totalSpentUSD,
+      );
+    },
   },
 
   actions: {

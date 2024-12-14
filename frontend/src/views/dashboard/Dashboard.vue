@@ -4,9 +4,11 @@ import BarChart from "@/components/charts/BarChart.vue";
 import DonutChart from "@/components/charts/DonutChart.vue";
 import { useChartStore } from "@/stores/chart/useChartStore";
 import { useThemeStore } from "@/stores/theme/useThemeStore";
+import { useCategoriesStore } from "@/stores/categories/useCategoriesStore";
 
 const chartStore = useChartStore();
 const themeStore = useThemeStore();
+const categoryStore = useCategoriesStore();
 
 const currency = ref<"TRY" | "USD">("TRY");
 </script>
@@ -30,16 +32,20 @@ const currency = ref<"TRY" | "USD">("TRY");
       </v-col>
       <v-col cols="12" lg="6">
         <DonutChart
-          :title="
-            currency === 'TRY'
-              ? $t('total spending by category with TRY') + ' ₺'
-              : $t('total spending by category with USD') + ' $'
-          "
           :series="currency === 'TRY' ? chartStore.dataTRY : chartStore.dataUSD"
         />
       </v-col>
       <v-col cols="12" lg="6">
-        <BarChart />
+        <BarChart
+          :limit="
+            currency === 'TRY' ? categoryStore.limitTRY : categoryStore.limitUSD
+          "
+          :spending="
+            currency === 'TRY'
+              ? categoryStore.spendingTRY
+              : categoryStore.spendingUSD
+          "
+        />
       </v-col>
     </v-row>
   </v-container>

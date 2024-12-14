@@ -3,23 +3,36 @@ import Alert from "./alerts/Alert.vue";
 import Appbar from "./appbar/Appbar.vue";
 import Drawer from "./drawer/Drawer.vue";
 import AddExpence from "./forms/AddExpence.vue";
+import Skeleton from "./loader/Skeleton.vue";
 import { useThemeStore } from "@/stores/theme/useThemeStore";
 import { useAlertStore } from "@/stores/alert/useAlertStore";
-import { ref, defineProps } from "vue";
+import { onMounted, ref, defineProps } from "vue";
 import { useExpenseStore } from "@/stores/expense/useExpenseStore";
-import Skeleton from "./loader/Skeleton.vue";
+import { useUserStore } from "@/stores/user/useUserStore";
+import { useCategoriesStore } from "@/stores/categories/useCategoriesStore";
+import { useChartStore } from "@/stores/chart/useChartStore";
 
 interface Props {
   isAuth: boolean;
-  loading: boolean;
 }
 
 const themeStore = useThemeStore();
+const userStore = useUserStore();
 const alertStore = useAlertStore();
 const expenseStore = useExpenseStore();
+const categoryStore = useCategoriesStore();
+const chartStore = useChartStore();
 const props = defineProps<Props>();
 
 const show = ref(false);
+
+onMounted(async () => {
+  userStore.checkAuth();
+  await userStore.getMe();
+  await categoryStore.getOverlimitedExpenses();
+  await categoryStore.getAll();
+  await chartStore.getTotalExpensesByCategory();
+});
 </script>
 
 <template>
@@ -27,10 +40,23 @@ const show = ref(false);
     <v-app>
       <Appbar />
 
-      <Drawer v-if="props.isAuth" />
+      <Drawer v-if="props.isAuth && !userStore.loading" />
       <v-main>
-        <Skeleton v-if="props.loading" />
-        <v-container v-else fluid class="border rounded-lg" height="100%">
+        <Skeleton
+          v-if="
+            userStore.loading || expenseStore.loading || categoryStore.loading
+          "
+        />
+        <v-container
+          v-if="
+            !expenseStore.loading &&
+            !chartStore.loading &&
+            !categoryStore.loading
+          "
+          fluid
+          class="border rounded-lg"
+          height="100%"
+        >
           <Alert v-if="alertStore.show" />
           <AddExpence />
           <RouterView />

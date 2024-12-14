@@ -1,5 +1,5 @@
 <template>
-  <v-card flat>
+  <v-card flat :class="$vuetify.display.mobile ? null : 'pa-5'">
     <v-card-title class="d-flex align-center pe-2">
       <v-icon icon="mdi-cash"></v-icon> &nbsp; {{ $t("expenses") }}
 
@@ -20,18 +20,33 @@
 
     <v-divider></v-divider>
     <v-data-table
-      v-model="expenseStore.expenses"
+      v-model="selectedExpenses"
       :filter-keys="['name']"
       :headers="headers"
       :items="expenses || []"
+      item-value="id"
       :mobile="$vuetify.display.mobile"
       :theme="themeStore.mode"
+      return-object
+      show-select
       height="70dvh"
       hover
     >
       <template v-slot:item.category="{ value }">
         {{ t(value) }}
       </template>
+
+      <template v-slot:item.actions="{ item }">
+        <v-btn
+          icon="mdi-delete"
+          size="x-small"
+          color="red-accent-2"
+          variant="tonal"
+          @click="deleteDialogStore.showDialog(item.id)"
+        >
+        </v-btn>
+      </template>
+
       <template v-slot:bottom>
         <div class="d-flex">
           <div class="flex-grow-1">
@@ -58,75 +73,44 @@
         </div>
       </template>
     </v-data-table>
+
+    <v-dialog v-model="deleteDialogStore.dialog" width="auto">
+      <v-card
+        max-width="400"
+        prepend-icon="mdi-delete"
+        text="Your purchase will be deleted. Do you want to continue?"
+        title="Delete Expense"
+      >
+        <template v-slot:actions>
+          <v-btn text="Cancel" color="secondary" variant="tonal" @click="deleteDialogStore.closeDialog"></v-btn>
+          <v-btn text="Ok" color="danger" variant="tonal" @click="deleteDialogStore.delete"</v-btn>
+        </template>
+      </v-card>
+    </v-dialog>
   </v-card>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from "vue";
-import { useExpenseStore } from "@/stores/expense/useExpenseStore";
 import { useThemeStore } from "@/stores/theme/useThemeStore";
 import { useI18n } from "vue-i18n";
-import { useRoute, useRouter } from "vue-router";
-import { debounce } from "chart.js/helpers";
+import { useExpenseTable } from "@/hooks/useExpenseTable";
+import { useDeleteDialogStore } from "@/stores/expense/useDeleteDialogStore";
 
-const { t } = useI18n();
-const route = useRoute();
-const router = useRouter();
-const expenseStore = useExpenseStore();
+const deleteDialogStore = useDeleteDialogStore();
+
+const {
+  headers,
+  selectedExpenses,
+  updatePage,
+  updateLimit,
+  updateSearchQuery,
+  expenses,
+  page,
+  limit,
+  pageCount,
+  searchQuery,
+} = useExpenseTable();
+
 const themeStore = useThemeStore();
-const searchQuery = ref<string>((route.query.query as string) || "");
-const page = ref<number>(Number(route.query.page) || 1);
-const limit = ref<number>(Number(route.query.limit) || 5);
-const headers = [
-  { key: "name", title: t("expense") },
-  { key: "category", title: t("category") },
-  { key: "amount", title: t("amount") },
-  { key: "price", title: t("price") },
-  { key: "createdAt", title: t("createdAt") },
-];
-
-function updateURL(updatedParams: Record<string, string>) {
-  router.push({
-    path: route.path,
-    query: {
-      ...route.query,
-      ...updatedParams,
-    },
-  });
-}
-
-function updatePage(newPage: number) {
-  updateURL({ page: newPage.toString() });
-}
-
-function updateLimit(newLimit: number) {
-  updateURL({ limit: newLimit.toString() });
-}
-
-const updateSearchQuery = debounce((newQuery: string) => {
-  updateURL({ query: newQuery[0].target?.value });
-}, 500);
-
-watch(
-  () => route.query,
-  async (newQuery) => {
-    page.value = Number(newQuery.page) || 1;
-    limit.value = Number(newQuery.limit) || 5;
-    searchQuery.value = (newQuery.query as string) || "";
-
-    expenseStore.getAllExpenses(searchQuery.value, page.value, limit.value);
-  },
-);
-
-const expenses = computed(() => expenseStore.expenses);
-
-const pageCount = computed(() => {
-  if (expenseStore.totalElements !== null)
-    return Math.ceil(expenseStore.totalElements / limit.value);
-});
-
-onMounted(() => {
-  if (!expenseStore.expenses)
-    expenseStore.getAllExpenses(searchQuery.value, page.value, limit.value);
-});
+const { t } = useI18n();
 </script>
