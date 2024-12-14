@@ -68,7 +68,7 @@ const formData: { email: string; password: string } = reactive({
 const handleSubmit = async () => {
   try {
     await userStore.signin(formData);
-    router.push("/");
+    router.push({ name: "Dashboard" });
   } catch (error) {
     console.log(error);
   }

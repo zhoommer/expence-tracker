@@ -42,9 +42,9 @@
   "Other": "Other",
   "Your expense has been added successfully.": "Your expense has been added successfully.",
   "currency": "Currency",
-  "total spending by category with TRY": "Total spending by category with TRY",
-  "total spending by category with USD": "Total spending by category with USD",
+  "total spending by category": "Total spending by category",
   "exceeding the limit": "Exceeding the limit",
   "limit": "Limit",
-  "spending": "Spending"
+  "spending": "Spending",
+  "delete": "Delete"
 }

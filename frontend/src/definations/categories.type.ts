@@ -4,8 +4,17 @@ export interface Categories {
 }
 
 export interface OverLimitedExpensesByCategory {
-  categoryName: string;
-  limit: number;
-  totalSpent: number;
-  isLimitExeeded: boolean;
+  overLimitedExpensesTRY: {
+    categoryName: string;
+    limit: number;
+    totalSpentTRY: number;
+    isLimitExeeded: boolean;
+  };
+
+  overLimitedExpensesUSD: {
+    categoryName: string;
+    limit: number;
+    totalSpentUSD: number;
+    isLimitExeeded: boolean;
+  };
 }
