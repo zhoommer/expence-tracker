@@ -42,15 +42,15 @@
 </template>
 
 <script setup lang="ts">
-import { useDrawerStore } from "@/stores/drawer/useDrawerStore";
-import { useThemeStore } from "@/stores/theme/useThemeStore";
-import { useUserStore } from "@/stores/user/useUserStore";
+import { DrawerStore } from "@/stores/drawer/drawerStore";
+import { ThemeStore } from "@/stores/theme/themeStore";
+import { UserStore } from "@/stores/user/userStore";
 import { menu } from "./Menu";
 import { useRouter } from "vue-router";
 
-const drawerStore = useDrawerStore();
-const themeStore = useThemeStore();
-const userStore = useUserStore();
+const drawerStore = DrawerStore();
+const themeStore = ThemeStore();
+const userStore = UserStore();
 const router = useRouter();
 
 const logout = async () => {

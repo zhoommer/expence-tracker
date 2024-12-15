@@ -18,9 +18,9 @@
 </template>
 
 <script setup lang="ts">
-import { useAlertStore } from "@/stores/alert/useAlertStore";
-import { useThemeStore } from "@/stores/theme/useThemeStore";
+import { AlertStore } from "@/stores/alert/alertStore";
+import { ThemeStore } from "@/stores/theme/themeStore";
 
-const alertStore = useAlertStore();
-const themeStore = useThemeStore();
+const alertStore = AlertStore();
+const themeStore = ThemeStore();
 </script>

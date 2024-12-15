@@ -31,10 +31,10 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { useThemeStore } from "@/stores/theme/useThemeStore";
+import { ThemeStore } from "@/stores/theme/themeStore";
 import Login from "./Login.vue";
 import Register from "./Register.vue";
 
-const themeStore = useThemeStore();
+const themeStore = ThemeStore();
 const tab = ref(null);
 </script>

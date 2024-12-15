@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const useThemeStore = defineStore("theme", {
+export const ThemeStore = defineStore("theme", {
   state: () => ({
     mode: localStorage.getItem("theme") === "light" ? "light" : "dark",
   }),

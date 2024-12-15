@@ -1,7 +1,7 @@
 import { reactive } from "vue";
 import { useI18n } from "vue-i18n";
-import { useCategoriesStore } from "@/stores/categories/useCategoriesStore";
-import { useExpenseStore } from "@/stores/expense/useExpenseStore";
+import { CategoriesStore } from "@/stores/categories/categoryStore";
+import { addExpense } from "@/stores/expense/actions";
 
 interface InitialState {
   name: string;
@@ -13,8 +13,7 @@ interface InitialState {
 
 export function useExpenseForm() {
   const { t } = useI18n();
-  const categoriesStore = useCategoriesStore();
-  const expenseStore = useExpenseStore();
+  const categoriesStore = CategoriesStore();
   const initialState: InitialState = reactive({
     name: "",
     categoryId: null,
@@ -40,7 +39,7 @@ export function useExpenseForm() {
       currency: initialState.currency,
     };
     try {
-      await expenseStore.addExpense(data);
+      await addExpense(data);
       initialState.name = "";
       initialState.categoryId = null;
       initialState.amount = null;

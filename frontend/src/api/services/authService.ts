@@ -1,5 +1,5 @@
+import axiosClient from "../axios";
 import type { SignUpCredentials } from "@/definations/signup-credentials.type";
-import axiosClient from "./axiosIntance";
 import type { User } from "@/definations/user.type";
 
 export class AuthServices {

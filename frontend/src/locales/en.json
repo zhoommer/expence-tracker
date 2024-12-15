@@ -46,5 +46,9 @@
   "exceeding the limit": "Exceeding the limit",
   "limit": "Limit",
   "spending": "Spending",
-  "delete": "Delete"
+  "delete": "Delete",
+  "delete expense": "Detele Expense",
+  "your purchase will be deleted. do you want to continue?": "Your purchase will be deleted. Do you want to continue?",
+  "ok": "Ok",
+  "cancel": "Cancel"
 }

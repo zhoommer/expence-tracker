@@ -1,13 +1,14 @@
 import { defineStore } from "pinia";
-import { AuthServices } from "@/services/authServices";
-import { useAlertStore } from "../alert/useAlertStore";
+import { AuthServices } from "@/api/services/authService";
+import { AuthAlertMessages } from "@/utils/alertMessages/auth/alertAuthMessages";
+import { AlertStore } from "../alert/alertStore";
 import type { SignUpCredentials } from "@/definations/signup-credentials.type";
 import type { User } from "@/definations/user.type";
-import { AuthAlertMessages } from "@/utils/alertMessages/auth/alertAuthMessages";
 
 const client = new AuthServices();
 const authAlertMessages = new AuthAlertMessages();
-export const useUserStore = defineStore("user", {
+
+export const UserStore = defineStore("user", {
   state: () => ({
     user: null as User | null,
     token: localStorage.getItem("token") as string | null,
@@ -26,7 +27,7 @@ export const useUserStore = defineStore("user", {
     },
 
     async signin(credentials: { email: string; password: string }) {
-      const alertStore = useAlertStore();
+      const alertStore = AlertStore();
       this.loading = true;
       this.error = null;
       try {
@@ -55,7 +56,7 @@ export const useUserStore = defineStore("user", {
     },
 
     async signup(credentials: SignUpCredentials) {
-      const alertStore = useAlertStore();
+      const alertStore = AlertStore();
       this.loading = true;
       this.error = null;
       try {
@@ -74,7 +75,7 @@ export const useUserStore = defineStore("user", {
     },
 
     async logout() {
-      const alertStore = useAlertStore();
+      const alertStore = AlertStore();
       alertStore.info({ title: "", text: authAlertMessages.successLogout() });
       await new Promise((resolve) => setTimeout(resolve, 2000));
       localStorage.removeItem("token");

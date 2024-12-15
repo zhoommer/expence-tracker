@@ -2,13 +2,13 @@
 import { ref } from "vue";
 import BarChart from "@/components/charts/BarChart.vue";
 import DonutChart from "@/components/charts/DonutChart.vue";
-import { useChartStore } from "@/stores/chart/useChartStore";
-import { useThemeStore } from "@/stores/theme/useThemeStore";
-import { useCategoriesStore } from "@/stores/categories/useCategoriesStore";
+import { ChartStore } from "@/stores/chart/chartStore";
+import { ThemeStore } from "@/stores/theme/themeStore";
+import { CategoriesStore } from "@/stores/categories/categoryStore";
 
-const chartStore = useChartStore();
-const themeStore = useThemeStore();
-const categoryStore = useCategoriesStore();
+const chartStore = ChartStore();
+const themeStore = ThemeStore();
+const categoryStore = CategoriesStore();
 
 const currency = ref<"TRY" | "USD">("TRY");
 </script>

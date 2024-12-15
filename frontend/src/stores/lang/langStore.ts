@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const useLangStore = defineStore("lang", {
+export const LangStore = defineStore("lang", {
   state: () => ({
     locale: localStorage.getItem("lang") === "tr" ? "tr" : "en",
   }),

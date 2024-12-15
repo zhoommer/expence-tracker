@@ -21,14 +21,14 @@ import DayJsADapter from "@date-io/dayjs";
 import { createI18n } from "vue-i18n";
 import en from "./locales/en.json";
 import tr from "./locales/tr.json";
-import { useLangStore } from "./stores/lang/useLangStore";
+import { LangStore } from "./stores/lang/langStore";
 
 // apex chart
 import VueApexCharts from "vue3-apexcharts";
 
 const app = createApp(App);
 const pinia = createPinia();
-const langStore = useLangStore(pinia);
+const langStore = LangStore(pinia);
 const locale = langStore.locale;
 
 const vuetify = createVuetify({

@@ -1,5 +1,6 @@
 import { computed, onMounted, ref, watch } from "vue";
-import { useExpenseStore } from "@/stores/expense/useExpenseStore";
+import { ExpenseStore } from "@/stores/expense/expenseStore";
+import { getAllExpenses } from "@/stores/expense/actions";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
 import { debounce } from "chart.js/helpers";
@@ -8,7 +9,7 @@ export function useExpenseTable() {
   const { t } = useI18n();
   const route = useRoute();
   const router = useRouter();
-  const expenseStore = useExpenseStore();
+  const expenseStore = ExpenseStore();
   const searchQuery = ref<string>((route.query.query as string) || "");
   const page = ref<number>(Number(route.query.page) || 1);
   const limit = ref<number>(Number(route.query.limit) || 5);
@@ -60,7 +61,7 @@ export function useExpenseTable() {
       limit.value = Number(newQuery.limit) || 5;
       searchQuery.value = (newQuery.query as string) || "";
 
-      expenseStore.getAllExpenses(searchQuery.value, page.value, limit.value);
+      getAllExpenses(searchQuery.value, page.value, limit.value);
     },
   );
 
@@ -73,7 +74,7 @@ export function useExpenseTable() {
 
   onMounted(() => {
     if (!expenseStore.expenses)
-      expenseStore.getAllExpenses(searchQuery.value, page.value, limit.value);
+      getAllExpenses(searchQuery.value, page.value, limit.value);
   });
 
   return {

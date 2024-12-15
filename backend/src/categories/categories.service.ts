@@ -27,6 +27,18 @@ export class CategoriesService {
     }
   }
 
+  async getUserCategoriesOfSpending(userId: string) {
+    const spendingCategories = await this.prisma.expense.findMany({
+      where: { userId },
+      select: { category: true },
+    });
+
+    return {
+      message: "Categories of spending fetched successfully",
+      data: spendingCategories,
+    };
+  }
+
   async getTotalExpensesByCategory(
     userId: string,
   ): Promise<TotalExpensesByCategory> {
