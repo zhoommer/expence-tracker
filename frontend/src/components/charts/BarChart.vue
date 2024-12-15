@@ -20,11 +20,12 @@
 </template>
 
 <script setup lang="ts">
-import { useCategoriesStore } from "@/stores/categories/useCategoriesStore";
 import { reactive, defineProps } from "vue";
 import { useI18n } from "vue-i18n";
+import { CategoriesStore } from "@/stores/categories/categoryStore";
+
 const { t } = useI18n();
-const categoryStore = useCategoriesStore();
+const categoryStore = CategoriesStore();
 
 interface Props {
   limit: number[];

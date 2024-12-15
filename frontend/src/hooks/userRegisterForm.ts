@@ -1,9 +1,9 @@
 import { ref, reactive, computed } from "vue";
 import { useVuelidate } from "@vuelidate/core";
-import { useThemeStore } from "@/stores/theme/useThemeStore";
-import { useUserStore } from "@/stores/user/useUserStore";
 import { registerFormRules } from "@/rules/register.rules";
-import { useAlertStore } from "@/stores/alert/useAlertStore";
+import { ThemeStore } from "@/stores/theme/themeStore";
+import { UserStore } from "@/stores/user/userStore";
+import { AlertStore } from "@/stores/alert/alertStore";
 import type { SignUpCredentials } from "@/definations/signup-credentials.type";
 
 interface InitialState extends SignUpCredentials {
@@ -12,9 +12,9 @@ interface InitialState extends SignUpCredentials {
 }
 
 export function useRegisterForm() {
-  const themeStore = useThemeStore();
-  const userStore = useUserStore();
-  const alertStore = useAlertStore();
+  const themeStore = ThemeStore();
+  const userStore = UserStore();
+  const alertStore = AlertStore();
 
   const show = ref(false);
   const loading = userStore.loading;

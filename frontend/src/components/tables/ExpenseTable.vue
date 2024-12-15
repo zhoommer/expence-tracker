@@ -42,7 +42,7 @@
           size="x-small"
           color="red-accent-2"
           variant="tonal"
-          @click="deleteDialogStore.showDialog(item.id)"
+          @click="showDialog(item.id)"
         >
         </v-btn>
       </template>
@@ -74,16 +74,16 @@
       </template>
     </v-data-table>
 
-    <v-dialog v-model="deleteDialogStore.dialog" width="auto">
+    <v-dialog v-model="dialog" transition="dialog-top-transition" width="auto">
       <v-card
         max-width="400"
         prepend-icon="mdi-delete"
-        text="Your purchase will be deleted. Do you want to continue?"
-        title="Delete Expense"
+        :text="t('your purchase will be deleted. do you want to continue?')"
+        :title="t('delete expense')"
       >
         <template v-slot:actions>
-          <v-btn text="Cancel" color="secondary" variant="tonal" @click="deleteDialogStore.closeDialog"></v-btn>
-          <v-btn text="Ok" color="danger" variant="tonal" @click="deleteDialogStore.delete"</v-btn>
+          <v-btn :text="t('cancel')" color="secondary" variant="tonal" @click="dialog = false"></v-btn>
+          <v-btn :text="t('ok')" color="danger" variant="tonal" @click="deleteExpense"</v-btn>
         </template>
       </v-card>
     </v-dialog>
@@ -91,12 +91,35 @@
 </template>
 
 <script setup lang="ts">
-import { useThemeStore } from "@/stores/theme/useThemeStore";
+import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useExpenseTable } from "@/hooks/useExpenseTable";
-import { useDeleteDialogStore } from "@/stores/expense/useDeleteDialogStore";
+import { ExpenseService } from "@/api/services/expenseService";
 
-const deleteDialogStore = useDeleteDialogStore();
+import { ThemeStore } from "@/stores/theme/themeStore";
+import { AlertStore } from "@/stores/alert/alertStore";
+
+const expenseService = new ExpenseService();
+const alertStore = AlertStore();
+const dialog = ref<boolean>(false);
+const id = ref<number | null>(null);
+
+function showDialog(expenseId: number) {
+  dialog.value = true;
+  id.value = expenseId;
+}
+
+async function deleteExpense() {
+  try {
+   await expenseService.deleteExpense(id.value);
+    alertStore.success({ title: "", text: "Expense deleted successfully" });
+  } catch (error) { 
+   console.log(error); 
+  } finally {
+    dialog.value = false;
+  }
+}
+
 
 const {
   headers,
@@ -111,6 +134,6 @@ const {
   searchQuery,
 } = useExpenseTable();
 
-const themeStore = useThemeStore();
+const themeStore = ThemeStore();
 const { t } = useI18n();
 </script>

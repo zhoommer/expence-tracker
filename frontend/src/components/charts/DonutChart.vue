@@ -18,10 +18,10 @@
 
 <script setup lang="ts">
 import { reactive, defineProps } from "vue";
-import { useChartStore } from "@/stores/chart/useChartStore";
+import { ChartStore } from "@/stores/chart/chartStore";
 import { convertedLabels } from "@/utils/convertedLabels/convertedLabels";
 
-const chartStore = useChartStore();
+const chartStore = ChartStore();
 
 interface Props {
   series: number[];

@@ -3,11 +3,11 @@ import type {
   OverLimitedExpensesByCategory,
 } from "@/definations/categories.type";
 import type { TotalExpenses } from "@/definations/expense.type";
-import axiosClient from "@/services/axiosIntance";
-import { ExpenseService } from "@/services/expenseService";
+import axiosClient from "@/api/axios";
+import { ExpenseService } from "@/api/services/expenseService";
 import { defineStore } from "pinia";
 
-export const useCategoriesStore = defineStore("categories", {
+export const CategoriesStore = defineStore("categories", {
   state: () => ({
     categories: [] as Categories[] | [],
     totalExpenses: [] as TotalExpenses[],

@@ -4,7 +4,7 @@ import type {
   InternalAxiosRequestConfig,
   AxiosResponse,
 } from "axios";
-import { useUserStore } from "@/stores/user/useUserStore";
+import { UserStore } from "@/stores/user/userStore";
 
 // const BASE_URL = import.meta.env.BACKEND_BASE_URL;
 
@@ -18,7 +18,7 @@ const axiosClient: AxiosInstance = axios.create({
 // Request Interceptor
 axiosClient.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    const userStore = useUserStore();
+    const userStore = UserStore();
     if (userStore.token && config.headers) {
       config.headers.Authorization = `Bearer ${userStore.token}`;
     } else {

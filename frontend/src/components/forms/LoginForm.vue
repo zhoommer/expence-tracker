@@ -50,13 +50,13 @@
 
 <script setup lang="ts">
 import { ref, reactive } from "vue";
-import { useThemeStore } from "@/stores/theme/useThemeStore";
-import { useUserStore } from "@/stores/user/useUserStore";
+import { ThemeStore } from "@/stores/theme/themeStore";
+import { UserStore } from "@/stores/user/userStore";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const themeStore = useThemeStore();
-const userStore = useUserStore();
+const themeStore = ThemeStore();
+const userStore = UserStore();
 
 const show = ref(false);
 

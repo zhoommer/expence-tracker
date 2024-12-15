@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
-import { ExpenseService } from "@/services/expenseService";
+import { ExpenseService } from "@/api/services/expenseService";
 
-export const useChartStore = defineStore("chart", {
+export const ChartStore = defineStore("chart", {
   state: () => ({
     labels: [""] as string[],
     dataTRY: [] as number[],

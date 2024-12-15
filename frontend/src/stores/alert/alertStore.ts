@@ -5,7 +5,7 @@ interface Props {
   text: string | undefined;
 }
 
-export const useAlertStore = defineStore("alert", {
+export const AlertStore = defineStore("alert", {
   state: () => ({
     show: false as boolean,
     color: "success" as "success" | "info" | "warning" | "error",

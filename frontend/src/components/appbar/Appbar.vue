@@ -47,16 +47,16 @@
 </template>
 
 <script setup lang="ts">
-import { useThemeStore } from "@/stores/theme/useThemeStore";
-import { useDrawerStore } from "@/stores/drawer/useDrawerStore";
-import { useLangStore } from "@/stores/lang/useLangStore";
 import { watch } from "vue";
 import tr from "@/assets/turkey.png";
 import us from "@/assets/usa.png";
+import { ThemeStore } from "@/stores/theme/themeStore";
+import { DrawerStore } from "@/stores/drawer/drawerStore";
+import { LangStore } from "@/stores/lang/langStore";
 
-const themeStore = useThemeStore();
-const drawerStore = useDrawerStore();
-const langStore = useLangStore();
+const themeStore = ThemeStore();
+const drawerStore = DrawerStore();
+const langStore = LangStore();
 
 function changeLanguage(lang: "en" | "tr") {
   langStore.changeLang(lang);

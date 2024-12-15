@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const useDrawerStore = defineStore("drawer", {
+export const DrawerStore = defineStore("drawer", {
   state: () => ({
     drawer: false as boolean,
   }),

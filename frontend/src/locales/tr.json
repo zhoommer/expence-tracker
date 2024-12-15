@@ -48,5 +48,9 @@
   "exceeding the limit": "Limiti Aşan Harcamalar",
   "limit": "Limit",
   "spending": "Harcama",
-  "delete": "Sil"
+  "delete": "Sil",
+  "delete expense": "Harcamayı Sil",
+  "your purchase will be deleted. do you want to continue?": "Harcamanız silinecek devam etmek. Devam etmek istiyor musunuz?",
+  "ok": "Tamam",
+  "cancel": "İptal"
 }

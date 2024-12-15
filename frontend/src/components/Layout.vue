@@ -1,27 +1,28 @@
 <script setup lang="ts">
+import { onMounted, ref, defineProps } from "vue";
 import Alert from "./alerts/Alert.vue";
 import Appbar from "./appbar/Appbar.vue";
 import Drawer from "./drawer/Drawer.vue";
 import AddExpence from "./forms/AddExpence.vue";
 import Skeleton from "./loader/Skeleton.vue";
-import { useThemeStore } from "@/stores/theme/useThemeStore";
-import { useAlertStore } from "@/stores/alert/useAlertStore";
-import { onMounted, ref, defineProps } from "vue";
-import { useExpenseStore } from "@/stores/expense/useExpenseStore";
-import { useUserStore } from "@/stores/user/useUserStore";
-import { useCategoriesStore } from "@/stores/categories/useCategoriesStore";
-import { useChartStore } from "@/stores/chart/useChartStore";
+
+import { ThemeStore } from "@/stores/theme/themeStore";
+import { AlertStore } from "@/stores/alert/alertStore";
+import { ExpenseStore } from "@/stores/expense/expenseStore";
+import { UserStore } from "@/stores/user/userStore";
+import { CategoriesStore } from "@/stores/categories/categoryStore";
+import { ChartStore } from "@/stores/chart/chartStore";
 
 interface Props {
   isAuth: boolean;
 }
 
-const themeStore = useThemeStore();
-const userStore = useUserStore();
-const alertStore = useAlertStore();
-const expenseStore = useExpenseStore();
-const categoryStore = useCategoriesStore();
-const chartStore = useChartStore();
+const themeStore = ThemeStore();
+const userStore = UserStore();
+const alertStore = AlertStore();
+const expenseStore = ExpenseStore();
+const categoryStore = CategoriesStore();
+const chartStore = ChartStore();
 const props = defineProps<Props>();
 
 const show = ref(false);

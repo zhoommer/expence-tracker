@@ -85,12 +85,12 @@
 </template>
 
 <script setup lang="ts">
-import { useExpenseStore } from "@/stores/expense/useExpenseStore";
+import { ExpenseStore } from "@/stores/expense/expenseStore";
+import { ThemeStore } from "@/stores/theme/themeStore";
 import { useExpenseForm } from "@/hooks/addExpenseForm";
-import { useThemeStore } from "@/stores/theme/useThemeStore";
 
-const expenseStore = useExpenseStore();
-const themeStore = useThemeStore();
+const expenseStore = ExpenseStore();
+const themeStore = ThemeStore();
 
 const { initialState, translatedItems, handleSubmit } = useExpenseForm();
 </script>

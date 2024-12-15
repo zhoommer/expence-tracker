@@ -1,5 +1,5 @@
-import { useUserStore } from "@/stores/user/useUserStore";
 import { createRouter, createWebHistory } from "vue-router";
+import { UserStore } from "@/stores/user/userStore";
 
 const routes = [
   {
@@ -31,7 +31,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const userStore = useUserStore();
+  const userStore = UserStore();
   if (to.meta.requiresAuth && !userStore.token) {
     next("/auth");
   } else {
