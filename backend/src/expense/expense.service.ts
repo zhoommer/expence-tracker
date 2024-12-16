@@ -4,6 +4,8 @@ import { PriceService } from "src/common/formatter/priceService";
 import { CreateExpenseDto } from "./dto/createExpense.dto";
 import { CustomException } from "src/common/exceptions/custom-exception";
 import { Expense } from "./types/expense.type";
+import { Currency } from "@prisma/client";
+import { equal } from "assert";
 
 @Injectable()
 export class ExpenseService {
@@ -60,6 +62,7 @@ export class ExpenseService {
   async getAll(
     userId: string,
     query?: string,
+    currency?: Currency | "",
     page?: number,
     limit?: number,
   ): Promise<{
@@ -72,9 +75,8 @@ export class ExpenseService {
       const allExpenses = await this.prisma.expense.findMany({
         where: {
           userId,
-          name: {
-            contains: query,
-          },
+          name: { contains: query },
+          currency: currency ? { equals: currency } : undefined,
         },
         take: limit,
         skip: offset,

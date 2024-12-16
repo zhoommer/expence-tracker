@@ -63,7 +63,7 @@ const menu: Menu[] = [
   {
     icon: "mdi-cash-multiple",
     title: "expenses",
-    to: "/expenses?query=&page=1&limit=5",
+    to: "/expenses?query=&currency=&page=1&limit=5",
   },
 ];
 

@@ -15,6 +15,7 @@ export class ExpenseService {
 
   async getAll(
     query?: string,
+    currency?: string,
     page?: number | null,
     limit?: number | null,
   ): Promise<{
@@ -25,6 +26,7 @@ export class ExpenseService {
     const queryParams = {
       params: {
         query: query ? query : "",
+        currency: currency,
         page: page ? page : 1,
         limit: limit ? limit : 5,
       },
