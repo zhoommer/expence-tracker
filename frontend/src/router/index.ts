@@ -10,7 +10,7 @@ const routes = [
   {
     path: "/",
     name: "Dashboard",
-    component: import("@/views/dashboard/Dashboard.vue"),
+    component: import("@/views/Dashboard.vue"),
     meta: {
       requiresAuth: true,
     },
@@ -18,7 +18,7 @@ const routes = [
   {
     path: "/expenses",
     name: "Expenses",
-    component: import("@/views/expenses/Expenses.vue"),
+    component: import("@/views/Expenses.vue"),
     meta: {
       requiresAuth: true,
     },

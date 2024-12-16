@@ -45,13 +45,27 @@
 import { DrawerStore } from "@/stores/drawer/drawerStore";
 import { ThemeStore } from "@/stores/theme/themeStore";
 import { UserStore } from "@/stores/user/userStore";
-import { menu } from "./Menu";
 import { useRouter } from "vue-router";
 
 const drawerStore = DrawerStore();
 const themeStore = ThemeStore();
 const userStore = UserStore();
 const router = useRouter();
+
+interface Menu {
+  icon: string;
+  title: string;
+  to: string;
+}
+
+const menu: Menu[] = [
+  { icon: "mdi-view-dashboard", title: "dashboard", to: "/" },
+  {
+    icon: "mdi-cash-multiple",
+    title: "expenses",
+    to: "/expenses?query=&page=1&limit=5",
+  },
+];
 
 const logout = async () => {
   await userStore.logout();
