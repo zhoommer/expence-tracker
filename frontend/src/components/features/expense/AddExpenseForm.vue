@@ -87,7 +87,7 @@
 <script setup lang="ts">
 import { ExpenseStore } from "@/stores/expense/expenseStore";
 import { ThemeStore } from "@/stores/theme/themeStore";
-import { useExpenseForm } from "@/hooks/addExpenseForm";
+import { useExpenseForm } from "@/composables/useExpenseForm";
 
 const expenseStore = ExpenseStore();
 const themeStore = ThemeStore();

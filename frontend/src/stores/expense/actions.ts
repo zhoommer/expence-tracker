@@ -1,9 +1,9 @@
-import type { AddExpense } from "@/definations/expense.type";
 import { ExpenseService } from "@/api/services/expenseService";
 import { ExpenseAlertMessages } from "@/utils/alertMessages/expense/alertExpenseMessages";
 import { ExpenseStore } from "./expenseStore";
 import { AlertStore } from "../alert/alertStore";
 import { ChartStore } from "@/stores/chart/chartStore";
+import type { AddExpense } from "@/types/api/Expense";
 
 export const addExpense = async (data: AddExpense) => {
   const alertStore = AlertStore();

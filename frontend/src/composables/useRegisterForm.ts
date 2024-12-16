@@ -4,7 +4,7 @@ import { registerFormRules } from "@/rules/register.rules";
 import { ThemeStore } from "@/stores/theme/themeStore";
 import { UserStore } from "@/stores/user/userStore";
 import { AlertStore } from "@/stores/alert/alertStore";
-import type { SignUpCredentials } from "@/definations/signup-credentials.type";
+import type { SignUpCredentials } from "@/types/utils/SignupCredentials";
 
 interface InitialState extends SignUpCredentials {
   rePassword: string;

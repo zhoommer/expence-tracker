@@ -1,10 +1,6 @@
 import axiosClient from "../axios";
-import type {
-  AddExpense,
-  Expense,
-  TotalExpenses,
-} from "@/definations/expense.type";
-import type { OverLimitedExpensesByCategory } from "@/definations/categories.type";
+import type { Expense, AddExpense, TotalExpenses } from "@/types/api/Expense";
+import type { OverLimitedExpensesByCategory } from "@/types/api/Categories";
 
 export class ExpenseService {
   private client = axiosClient;

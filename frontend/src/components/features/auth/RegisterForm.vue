@@ -138,18 +138,9 @@
 </template>
 
 <script setup lang="ts">
-import { useRegisterForm } from "@/hooks/userRegisterForm";
+import { useRegisterForm } from "@/composables/useRegisterForm";
 import { countryPhoneCodes } from "@/utils/countryPhoneCodes";
-import { watch } from "vue";
 
-const {
-  themeStore,
-  userStore,
-  initialState,
-  switchColor,
-  v$,
-  show,
-  handleSubmit,
-  loading,
-} = useRegisterForm();
+const { themeStore, initialState, v$, show, handleSubmit, loading } =
+  useRegisterForm();
 </script>

@@ -1,8 +1,8 @@
 import type {
   Categories,
   OverLimitedExpensesByCategory,
-} from "@/definations/categories.type";
-import type { TotalExpenses } from "@/definations/expense.type";
+} from "@/types/api/Categories";
+import type { TotalExpenses } from "@/types/api/Expense";
 import axiosClient from "@/api/axios";
 import { ExpenseService } from "@/api/services/expenseService";
 import { defineStore } from "pinia";

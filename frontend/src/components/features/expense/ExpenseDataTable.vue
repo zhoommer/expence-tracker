@@ -93,7 +93,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { useExpenseTable } from "@/hooks/useExpenseTable";
+import { useExpenseTable } from "@/composables/useExpenseTable";
 import { ExpenseService } from "@/api/services/expenseService";
 
 import { ThemeStore } from "@/stores/theme/themeStore";
