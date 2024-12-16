@@ -11,6 +11,9 @@ export function useExpenseTable() {
   const router = useRouter();
   const expenseStore = ExpenseStore();
   const searchQuery = ref<string>((route.query.query as string) || "");
+  const currency = ref<"" | "USD" | "TRY">(
+    route.query.currency as "USD" | "TRY" | "",
+  );
   const page = ref<number>(Number(route.query.page) || 1);
   const limit = ref<number>(Number(route.query.limit) || 5);
   const headers = [
@@ -21,16 +24,6 @@ export function useExpenseTable() {
     { key: "createdAt", title: t("createdAt") },
     { key: "actions", title: t("delete") },
   ];
-
-  const selectedExpenses = ref<
-    {
-      name: string;
-      category: string;
-      amount: number;
-      price: number;
-      createdAt: string;
-    }[]
-  >([]);
 
   function updateURL(updatedParams: Record<string, string>) {
     router.push({
@@ -50,6 +43,10 @@ export function useExpenseTable() {
     updateURL({ limit: newLimit.toString() });
   }
 
+  function updateCurrency(newCurrency: string) {
+    updateURL({ currency: newCurrency });
+  }
+
   const updateSearchQuery = debounce((newQuery: string) => {
     updateURL({ query: newQuery[0].target?.value });
   }, 500);
@@ -61,7 +58,12 @@ export function useExpenseTable() {
       limit.value = Number(newQuery.limit) || 5;
       searchQuery.value = (newQuery.query as string) || "";
 
-      getAllExpenses(searchQuery.value, page.value, limit.value);
+      getAllExpenses(
+        searchQuery.value,
+        currency.value,
+        page.value,
+        limit.value,
+      );
     },
   );
 
@@ -74,19 +76,25 @@ export function useExpenseTable() {
 
   onMounted(() => {
     if (!expenseStore.expenses)
-      getAllExpenses(searchQuery.value, page.value, limit.value);
+      getAllExpenses(
+        searchQuery.value,
+        currency.value,
+        page.value,
+        limit.value,
+      );
   });
 
   return {
     headers,
-    selectedExpenses,
     updatePage,
     updateLimit,
     updateSearchQuery,
+    updateCurrency,
     expenses,
     page,
     limit,
     pageCount,
     searchQuery,
+    currency,
   };
 }

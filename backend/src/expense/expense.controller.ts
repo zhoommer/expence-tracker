@@ -15,6 +15,7 @@ import { ExpenseService } from "./expense.service";
 import { CreateExpenseDto } from "./dto/createExpense.dto";
 import { AtGuard } from "src/common/guards";
 import { GetCurrentUserId } from "src/common/decorators";
+import { Currency } from "@prisma/client";
 
 @Controller("api/expense")
 export class ExpenseController {
@@ -36,12 +37,19 @@ export class ExpenseController {
   async getAll(
     @GetCurrentUserId() userId: string,
     @Query("query") query?: string,
+    @Query("currency") currency?: Currency,
     @Query("page") page?: string,
     @Query("limit") limit?: string,
   ) {
     const parsedPage = page ? parseInt(page) : undefined;
     const parsedLimit = limit ? parseInt(limit) : 3;
-    return this.expenseService.getAll(userId, query, parsedPage, parsedLimit);
+    return this.expenseService.getAll(
+      userId,
+      query,
+      currency,
+      parsedPage,
+      parsedLimit,
+    );
   }
 
   @Get("/get-by-id/:expenseId")

@@ -25,12 +25,13 @@ export const addExpense = async (data: AddExpense) => {
 
 export const getAllExpenses = async (
   query?: string,
+  currency?: string,
   page?: number,
   limit?: number,
 ) => {
   const client = new ExpenseService();
   try {
-    const response = await client.getAll(query, page, limit);
+    const response = await client.getAll(query, currency, page, limit);
     ExpenseStore().expenses = response.data;
     ExpenseStore().totalElements = response.totalElements;
   } catch (error) {

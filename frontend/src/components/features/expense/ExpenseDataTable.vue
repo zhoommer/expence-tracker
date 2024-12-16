@@ -1,9 +1,23 @@
 <template>
-  <v-card flat :class="$vuetify.display.mobile ? null : 'pa-5'">
+  <v-card flat :class="$vuetify.display.mobile ? null : 'pa-5 border'" :max-height="$vuetify.display.mobile ? '' : '70dvh'">
     <v-card-title class="d-flex align-center pe-2">
       <v-icon icon="mdi-cash"></v-icon> &nbsp; {{ $t("expenses") }}
 
       <v-spacer></v-spacer>
+
+      <v-select 
+        class="mt-6 me-5"
+        v-model="currency" 
+        item-value="value" 
+        item-title="title" 
+        density="compact"
+        single-line
+        flat
+        :prepend-inner-icon="currency === 'TRY' ? 'mdi-currency-try' : currency === 'USD' ? 'mdi-currency-usd' : ''"
+
+        :items="[ { title: 'Hepsi', value: '' }, { title: 'TRY', value: 'TRY' }, { title: 'USD', value: 'USD' }]" variant="solo-filled" 
+        @update:model-value="updateCurrency">
+      </v-select>
 
       <v-text-field
         v-model="searchQuery"
@@ -20,15 +34,12 @@
 
     <v-divider></v-divider>
     <v-data-table
-      v-model="selectedExpenses"
       :filter-keys="['name']"
       :headers="headers"
       :items="expenses || []"
       item-value="id"
       :mobile="$vuetify.display.mobile"
       :theme="themeStore.mode"
-      return-object
-      show-select
       height="70dvh"
       hover
     >
@@ -47,31 +58,9 @@
         </v-btn>
       </template>
 
-      <template v-slot:bottom>
-        <div class="d-flex">
-          <div class="flex-grow-1">
-            <v-pagination
-              :color="themeStore.color"
-              :model-value="page"
-              :length="pageCount"
-              size="small"
-              rounded="circle"
-              @update:model-value="updatePage"
-            >
-            </v-pagination>
-          </div>
-          <div class="pe-2">
-            <v-select
-              :color="themeStore.color"
-              :model-value="limit"
-              :items="[5, 10, 15]"
-              min-width="80"
-              variant="underlined"
-              @update:model-value="updateLimit"
-            ></v-select>
-          </div>
-        </div>
-      </template>
+      <!-- <template v-slot:bottom> -->
+      <!---->
+      <!-- </template> -->
     </v-data-table>
 
     <v-dialog v-model="dialog" transition="dialog-top-transition" width="auto">
@@ -87,6 +76,32 @@
         </template>
       </v-card>
     </v-dialog>
+  
+  </v-card>
+  <v-card>
+    <div class="d-flex align-center">
+      <div class="flex-grow-1">
+       <v-pagination
+         :color="themeStore.color"
+         :model-value="page"
+         :length="pageCount"
+         size="small"
+         rounded="circle"
+         @update:model-value="updatePage"
+       >
+       </v-pagination>
+      </div>
+      <div class="pe-2">
+       <v-select
+         :color="themeStore.color"
+         :model-value="limit"
+         :items="[5, 10, 15]"
+         min-width="80"
+         variant="underlined"
+         @update:model-value="updateLimit"
+       ></v-select>
+      </div>
+    </div>
   </v-card>
 </template>
 
@@ -123,15 +138,16 @@ async function deleteExpense() {
 
 const {
   headers,
-  selectedExpenses,
   updatePage,
   updateLimit,
   updateSearchQuery,
+  updateCurrency,
   expenses,
   page,
   limit,
   pageCount,
   searchQuery,
+  currency,
 } = useExpenseTable();
 
 const themeStore = ThemeStore();
