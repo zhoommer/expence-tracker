@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { onMounted, ref, defineProps } from "vue";
-import Alert from "./alerts/Alert.vue";
-import Appbar from "./appbar/Appbar.vue";
-import Drawer from "./drawer/Drawer.vue";
-import AddExpence from "./forms/AddExpence.vue";
-import Skeleton from "./loader/Skeleton.vue";
+import Alert from "./common/Alert.vue";
+import Appbar from "./layout/Appbar.vue";
+import Sidebar from "./layout/Sidebar.vue";
+import AddExpenseForm from "./features/expense/AddExpenseForm.vue";
+import Skeleton from "./common/Skeleton.vue";
 
 import { ThemeStore } from "@/stores/theme/themeStore";
 import { AlertStore } from "@/stores/alert/alertStore";
@@ -41,7 +41,7 @@ onMounted(async () => {
     <v-app>
       <Appbar />
 
-      <Drawer v-if="props.isAuth && !userStore.loading" />
+      <Sidebar v-if="props.isAuth && !userStore.loading" />
       <v-main>
         <Skeleton
           v-if="
@@ -59,7 +59,7 @@ onMounted(async () => {
           height="100%"
         >
           <Alert v-if="alertStore.show" />
-          <AddExpence />
+          <AddExpenseForm />
           <RouterView />
           <v-tooltip v-model="show" location="top" v-if="props.isAuth">
             <template v-slot:activator="{ props }">

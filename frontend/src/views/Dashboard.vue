@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import BarChart from "@/components/charts/BarChart.vue";
-import DonutChart from "@/components/charts/DonutChart.vue";
+import Barchart from "@/components/common/Barchart.vue";
+import Donutchart from "@/components/common/Donutchart.vue";
 import { ChartStore } from "@/stores/chart/chartStore";
 import { ThemeStore } from "@/stores/theme/themeStore";
 import { CategoriesStore } from "@/stores/categories/categoryStore";
@@ -31,12 +31,12 @@ const currency = ref<"TRY" | "USD">("TRY");
         ></v-select>
       </v-col>
       <v-col cols="12" lg="6">
-        <DonutChart
+        <Donutchart
           :series="currency === 'TRY' ? chartStore.dataTRY : chartStore.dataUSD"
         />
       </v-col>
       <v-col cols="12" lg="6">
-        <BarChart
+        <Barchart
           :limit="
             currency === 'TRY' ? categoryStore.limitTRY : categoryStore.limitUSD
           "
