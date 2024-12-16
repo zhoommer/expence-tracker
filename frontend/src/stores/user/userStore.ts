@@ -2,8 +2,8 @@ import { defineStore } from "pinia";
 import { AuthServices } from "@/api/services/authService";
 import { AuthAlertMessages } from "@/utils/alertMessages/auth/alertAuthMessages";
 import { AlertStore } from "../alert/alertStore";
-import type { SignUpCredentials } from "@/definations/signup-credentials.type";
-import type { User } from "@/definations/user.type";
+import type { User } from "@/types/api/User";
+import type { SignUpCredentials } from "@/types/utils/SignupCredentials";
 
 const client = new AuthServices();
 const authAlertMessages = new AuthAlertMessages();
