@@ -4,7 +4,7 @@
     :icon="alertStore.icon"
     :title="alertStore.title"
     :text="alertStore.text"
-    :variant="themeStore.variant"
+    variant="elevated"
     class="mt-16 me-5 bounce"
     position="absolute"
     location="top end"
@@ -19,8 +19,6 @@
 
 <script setup lang="ts">
 import { AlertStore } from "@/stores/alert/alertStore";
-import { ThemeStore } from "@/stores/theme/themeStore";
 
 const alertStore = AlertStore();
-const themeStore = ThemeStore();
 </script>

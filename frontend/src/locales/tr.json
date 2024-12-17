@@ -41,7 +41,7 @@
   "Child and Pet": "Çocuk ve Evcil Hayvan Masrafları",
   "Other": "Diğer",
 
-  "Your expense has been added successfully.": "Harcamanız başarıyla eklendi.",
+  "your expense has been added successfully.": "Harcamanız başarıyla eklendi.",
   "currency": "Para birimi",
 
   "total spending by category": "Kategorilere Göre Toplam Harcamalar",
@@ -52,5 +52,8 @@
   "delete expense": "Harcamayı Sil",
   "your purchase will be deleted. do you want to continue?": "Harcamanız silinecek devam etmek. Devam etmek istiyor musunuz?",
   "ok": "Tamam",
-  "cancel": "İptal"
+  "cancel": "İptal",
+  "your session has expried. You are directed to the login screen...": "Oturum süreniz doldu. Giriş ekranına yönlendiriliyorsunuz...",
+  "phoneNumber": "Telefon Numarası",
+  "birthDate": "Doğum Tarihi"
 }

@@ -40,6 +40,7 @@
       item-value="id"
       :mobile="$vuetify.display.mobile"
       :theme="themeStore.mode"
+      hide-default-footer
       height="70dvh"
       hover
     >
@@ -57,10 +58,6 @@
         >
         </v-btn>
       </template>
-
-      <!-- <template v-slot:bottom> -->
-      <!---->
-      <!-- </template> -->
     </v-data-table>
 
     <v-dialog v-model="dialog" transition="dialog-top-transition" width="auto">

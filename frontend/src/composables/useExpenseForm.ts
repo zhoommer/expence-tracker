@@ -2,6 +2,7 @@ import { reactive } from "vue";
 import { useI18n } from "vue-i18n";
 import { CategoriesStore } from "@/stores/categories/categoryStore";
 import { addExpense } from "@/stores/expense/actions";
+import { AlertStore } from "@/stores/alert/alertStore";
 
 interface InitialState {
   name: string;
@@ -14,6 +15,7 @@ interface InitialState {
 export function useExpenseForm() {
   const { t } = useI18n();
   const categoriesStore = CategoriesStore();
+  const alertStore = AlertStore();
   const initialState: InitialState = reactive({
     name: "",
     categoryId: null,
@@ -40,6 +42,10 @@ export function useExpenseForm() {
     };
     try {
       await addExpense(data);
+      alertStore.success({
+        title: "",
+        text: t("your expense has been added successfully."),
+      });
       initialState.name = "";
       initialState.categoryId = null;
       initialState.amount = null;

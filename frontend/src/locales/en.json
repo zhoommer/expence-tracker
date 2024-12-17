@@ -40,7 +40,7 @@
   "Digital Subscriptions": "Digital Subscriptions",
   "Child and Pet": "Child and Pet",
   "Other": "Other",
-  "Your expense has been added successfully.": "Your expense has been added successfully.",
+  "your expense has been added successfully.": "Your expense has been added successfully.",
   "currency": "Currency",
   "total spending by category": "Total spending by category",
   "exceeding the limit": "Exceeding the limit",
@@ -50,5 +50,8 @@
   "delete expense": "Detele Expense",
   "your purchase will be deleted. do you want to continue?": "Your purchase will be deleted. Do you want to continue?",
   "ok": "Ok",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "your session has expired. you are directed to the login screen...": "Your session has expired. You area directed to the login screen...",
+  "phoneNumber": "Phone Number",
+  "birthDate": "Birth Date"
 }
