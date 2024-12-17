@@ -30,12 +30,12 @@ const currency = ref<"TRY" | "USD">("TRY");
           item-value="value"
         ></v-select>
       </v-col>
-      <v-col cols="12" lg="6">
+      <v-col cols="12" md="6" lg="6">
         <Donutchart
           :series="currency === 'TRY' ? chartStore.dataTRY : chartStore.dataUSD"
         />
       </v-col>
-      <v-col cols="12" lg="6">
+      <v-col cols="12" md="6" lg="6">
         <Barchart
           :limit="
             currency === 'TRY' ? categoryStore.limitTRY : categoryStore.limitUSD

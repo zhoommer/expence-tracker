@@ -7,11 +7,7 @@
     rail
   >
     <v-list>
-      <v-list-item
-        prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
-        :title="userStore.fullName"
-        :subtitle="userStore.user?.email"
-      ></v-list-item>
+      <ProfileDialog />
     </v-list>
 
     <v-divider></v-divider>
@@ -46,11 +42,23 @@ import { DrawerStore } from "@/stores/drawer/drawerStore";
 import { ThemeStore } from "@/stores/theme/themeStore";
 import { UserStore } from "@/stores/user/userStore";
 import { useRouter } from "vue-router";
+import { ref } from "vue";
+import ProfileDialog from "../features/profile/ProfileDialog.vue";
 
 const drawerStore = DrawerStore();
 const themeStore = ThemeStore();
 const userStore = UserStore();
 const router = useRouter();
+
+const show = ref<boolean>(false);
+
+async function handleClickAvatar() {
+  await userStore.getMe();
+  show.value = true;
+}
+
+const user: { name: string; surname: string; email: string } | null =
+  JSON.parse(localStorage.getItem("user") || "");
 
 interface Menu {
   icon: string;

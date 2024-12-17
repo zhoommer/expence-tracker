@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, defineProps } from "vue";
+import { ref, defineProps, onMounted } from "vue";
 import Alert from "./common/Alert.vue";
 import Appbar from "./layout/Appbar.vue";
 import Sidebar from "./layout/Sidebar.vue";
@@ -18,21 +18,18 @@ interface Props {
 }
 
 const themeStore = ThemeStore();
-const userStore = UserStore();
 const alertStore = AlertStore();
+const userStore = UserStore();
 const expenseStore = ExpenseStore();
-const categoryStore = CategoriesStore();
 const chartStore = ChartStore();
+const categoriesStore = CategoriesStore();
 const props = defineProps<Props>();
-
 const show = ref(false);
 
 onMounted(async () => {
-  userStore.checkAuth();
-  await userStore.getMe();
-  await categoryStore.getOverlimitedExpenses();
-  await categoryStore.getAll();
   await chartStore.getTotalExpensesByCategory();
+  await categoriesStore.getOverlimitedExpenses();
+  await categoriesStore.getAll();
 });
 </script>
 
@@ -45,19 +42,13 @@ onMounted(async () => {
       <v-main>
         <Skeleton
           v-if="
-            userStore.loading || expenseStore.loading || categoryStore.loading
+            userStore.loading ||
+            expenseStore.loading ||
+            categoriesStore.loading ||
+            chartStore.loading
           "
         />
-        <v-container
-          v-if="
-            !expenseStore.loading &&
-            !chartStore.loading &&
-            !categoryStore.loading
-          "
-          fluid
-          class="border rounded-lg"
-          height="100%"
-        >
+        <v-container v-else fluid class="border rounded-lg" height="100%">
           <Alert v-if="alertStore.show" />
           <AddExpenseForm />
           <RouterView />

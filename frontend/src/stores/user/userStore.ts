@@ -11,6 +11,7 @@ const authAlertMessages = new AuthAlertMessages();
 export const UserStore = defineStore("user", {
   state: () => ({
     user: null as User | null,
+    userDialog: true as boolean,
     token: localStorage.getItem("token") as string | null,
     loading: false as boolean,
     error: "" as string | null,
@@ -21,6 +22,10 @@ export const UserStore = defineStore("user", {
   },
 
   actions: {
+    showDialog() {
+      this.userDialog = true;
+    },
+
     checkAuth() {
       if (!this.token) return false;
       return true;
@@ -36,6 +41,16 @@ export const UserStore = defineStore("user", {
           this.token = response.access_token;
           const profile = await client.getMe();
           if (profile.data) {
+            localStorage.setItem(
+              "user",
+              JSON.stringify({
+                name: profile.data.firstname,
+                surname: profile.data.lastname,
+                phone: profile.data.phone,
+                birthDate: profile.data.birthDate,
+                email: profile.data.email,
+              }),
+            );
             this.user = profile.data;
           }
         }
@@ -84,7 +99,7 @@ export const UserStore = defineStore("user", {
     },
 
     async getMe() {
-      this.loading = true;
+      // this.loading = true;
       this.error = null;
 
       try {
@@ -93,7 +108,7 @@ export const UserStore = defineStore("user", {
       } catch (error) {
         this.error = "Fetch failed";
       } finally {
-        this.loading = false;
+        // this.loading = false;
       }
     },
   },
